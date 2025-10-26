@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils/cn'
-import { useTranslation } from '@/contexts/LanguageContext'
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl'
@@ -11,7 +10,6 @@ interface LogoProps {
 }
 
 export function Logo({ size = 'lg', className, animated = true }: LogoProps) {
-  const { t } = useTranslation()
   const sizeClasses = {
     sm: 'text-2xl',
     md: 'text-3xl',
@@ -60,7 +58,7 @@ export function Logo({ size = 'lg', className, animated = true }: LogoProps) {
           animate={animated ? { opacity: 1, x: 0 } : {}}
           transition={animated ? { duration: 0.8, delay: 0.2 } : {}}
         >
-{t('game.title')}
+            Crônicas de Altherion
         </motion.h1>
         
         <motion.p
@@ -72,7 +70,7 @@ export function Logo({ size = 'lg', className, animated = true }: LogoProps) {
           animate={animated ? { opacity: 1, x: 0 } : {}}
           transition={animated ? { duration: 0.8, delay: 0.4 } : {}}
         >
-{t('game.subtitle')}
+            RPG Narrativo com IA
         </motion.p>
       </div>
 

@@ -7,7 +7,6 @@ import { getClassDetails } from '@/lib/game/classDetails'
 import { getRecommendedEquipments } from '@/lib/game/equipment'
 import { getRecommendedSkills } from '@/lib/game/skills'
 import { cn } from '@/lib/utils/cn'
-import { useTranslation } from '@/contexts/LanguageContext'
 
 interface AdvancedCharacterSelectorProps {
   onSelectClass: (classe: CharacterClass) => void
@@ -20,7 +19,6 @@ export function AdvancedCharacterSelector({
   selectedClass, 
   className 
 }: AdvancedCharacterSelectorProps) {
-  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<'overview' | 'stats' | 'equipment' | 'abilities'>('overview')
   
   const classes = Object.entries(CLASSES) as [CharacterClass, typeof CLASSES[CharacterClass]][]
@@ -63,7 +61,7 @@ export function AdvancedCharacterSelector({
       {/* Header */}
       <div className="p-4 border-b border-gray-700 bg-gray-800/50">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-white">{t('game.selectClass')}</h2>
+          <h2 className="text-2xl font-bold text-white">Selecione sua Classe</h2>
           <div className="flex space-x-2">
             <button
               onClick={() => setActiveTab('overview')}
@@ -137,12 +135,19 @@ export function AdvancedCharacterSelector({
                     <div className="text-2xl">{getClassIcon(classeKey)}</div>
                     <div>
                       <h4 className="font-semibold text-white text-sm">
-                        {t(`classes.${classeKey}.name`)}
+                        {CLASSES[classeKey as CharacterClass].nome}
                       </h4>
                       <p className="text-xs text-gray-400">
-                        {classeInfo.atributosPrincipais.map(attr => 
-                          t(`character.attributes.${attr}`)
-                        ).join(' + ')}
+                        {classeInfo.atributosPrincipais.map(attr => {
+                          const attrNames: Record<string, string> = {
+                            forca: 'Força',
+                            vitalidade: 'Vitalidade',
+                            inteligencia: 'Inteligência',
+                            sabedoria: 'Sabedoria',
+                            agilidade: 'Agilidade'
+                          }
+                          return attrNames[attr] || attr
+                        }).join(' + ')}
                       </p>
                     </div>
                   </div>
@@ -298,7 +303,7 @@ export function AdvancedCharacterSelector({
       <div className="p-4 border-t border-gray-700 bg-gray-800/50">
         <div className="flex items-center justify-between">
           <div className="text-sm text-gray-400">
-            {selectedClass ? `${t(`classes.${selectedClass}.name`)} selecionado` : 'Selecione uma classe'}
+            {selectedClass ? `${CLASSES[selectedClass].nome} selecionado` : 'Selecione uma classe'}
           </div>
           <button
             onClick={() => selectedClass && onSelectClass(selectedClass)}
