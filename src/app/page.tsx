@@ -8,6 +8,7 @@ import { AdvancedCharacterSelector } from '@/components/game/AdvancedCharacterSe
 import { NarrativeWindow } from '@/components/game/NarrativeWindow'
 import { Logo } from '@/components/ui/Logo'
 import { LanguageSelector } from '@/components/ui/LanguageSelector'
+import { MainMenu } from '@/components/ui/MainMenu'
 import { useTranslation } from '@/contexts/LanguageContext'
 import { TranslationDevPanel } from '@/components/dev/TranslationDevPanel'
 
@@ -16,6 +17,7 @@ export default function Home() {
   const [character, setCharacter] = useState<Character | null>(null)
   const [selectedClass, setSelectedClass] = useState<CharacterClass | null>(null)
   const [characterName, setCharacterName] = useState('')
+  const [showGame, setShowGame] = useState(false)
 
   const handleCreateCharacter = () => {
     if (!selectedClass || !characterName.trim()) return
@@ -28,6 +30,10 @@ export default function Home() {
     if (!character) return
     const updatedCharacter = adicionarExperiencia(character, 100)
     setCharacter(updatedCharacter)
+  }
+
+  const handleStartGame = () => {
+    setShowGame(true)
   }
 
   return (
@@ -46,132 +52,14 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto p-6">
-        {!character ? (
+        {!showGame ? (
+          /* Menu Principal */
+          <MainMenu onStartGame={handleStartGame}>
+            {/* Conteúdo do menu será renderizado pelo MainMenu */}
+          </MainMenu>
+        ) : !character ? (
           /* Criação de Personagem */
           <div className="space-y-8">
-            {/* Seção de Diferencial do Jogo Narrativo */}
-            <div className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 rounded-2xl p-8 border border-purple-500/30 mb-12">
-              <div className="text-center mb-8">
-                <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-4">
-                  🎭 Por que um RPG Narrativo?
-                </h1>
-                <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                  Descubra a magia de criar sua própria história com inteligência artificial
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8 mb-8">
-                {/* Coluna Esquerda */}
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="text-3xl">🧠</div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Você é o Autor da História</h3>
-                      <p className="text-gray-300">
-                        Nos jogos tradicionais, você consome histórias. Aqui, você <strong>escreve o próprio destino</strong>.
-                        Cada ação gera consequências únicas através da IA.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="text-3xl">🗺️</div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Mundo Infinito</h3>
-                      <p className="text-gray-300">
-                        Sem limitações de gráficos ou mapas. Apenas <strong>imaginação + IA</strong> criam aventuras infinitas.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="text-3xl">🕰️</div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Imersão Psicológica</h3>
-                      <p className="text-gray-300">
-                        Sinta-se dentro de um <strong>livro vivo</strong> onde suas escolhas moldam o mundo ao redor.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Coluna Direita */}
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="text-3xl">🧙‍♂️</div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">IA que Reage a Você</h3>
-                      <p className="text-gray-300">
-                        O mundo "ouve" suas ações e se adapta. NPCs lembram do que você fez.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="text-3xl">⚡</div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Leve e Acessível</h3>
-                      <p className="text-gray-300">
-                        Roda no navegador, sem GPU. Milhares de jogadores simultâneos sem problemas.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="text-3xl">🎨</div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Arte Gerada por IA</h3>
-                      <p className="text-gray-300">
-                        Imagens únicas para cada cena, criadas dinamicamente pela IA.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Comparação Visual */}
-              <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-600">
-                <h3 className="text-2xl font-bold text-center text-white mb-6">Comparação: Tradicional vs Narrativo</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="text-center">
-                    <div className="text-4xl mb-3">🎮</div>
-                    <h4 className="text-lg font-semibold text-red-400 mb-3">Jogos Tradicionais</h4>
-                    <ul className="text-gray-300 space-y-2 text-sm">
-                      <li>• História pré-programada</li>
-                      <li>• Liberdade limitada</li>
-                      <li>• Rejogabilidade média</li>
-                      <li>• Custo alto de produção</li>
-                      <li>• Imersão apenas visual</li>
-                    </ul>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl mb-3">✨</div>
-                    <h4 className="text-lg font-semibold text-green-400 mb-3">Crônicas de Altherion</h4>
-                    <ul className="text-gray-300 space-y-2 text-sm">
-                      <li>• História viva e mutável</li>
-                      <li>• Liberdade infinita</li>
-                      <li>• Rejogabilidade infinita</li>
-                      <li>• Escalável e leve</li>
-                      <li>• Imersão emocional profunda</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Call to Action */}
-              <div className="text-center mt-8">
-                <p className="text-lg text-purple-300 mb-4">
-                  <strong>Pronto para escrever sua própria saga épica?</strong>
-                </p>
-                <div className="flex justify-center space-x-2 text-2xl">
-                  <span>⚔️</span>
-                  <span>🧙‍♂️</span>
-                  <span>🐉</span>
-                  <span>🏰</span>
-                  <span>✨</span>
-                </div>
-              </div>
-            </div>
             <div className="text-center">
               <h2 className="text-3xl font-bold text-white mb-4">
                 {t('game.welcome')}
@@ -207,7 +95,7 @@ export default function Home() {
                 disabled={!selectedClass || !characterName.trim()}
                 className="px-8 py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors"
               >
-{t('game.createCharacter')}
+                {t('game.createCharacter')}
               </button>
             </div>
           </div>
@@ -242,13 +130,13 @@ export default function Home() {
                 onClick={handleAddXP}
                 className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
               >
-{t('game.addXP')}
+                {t('game.addXP')}
               </button>
               <button
                 onClick={() => setCharacter(null)}
                 className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors"
               >
-{t('game.createNewCharacter')}
+                {t('game.createNewCharacter')}
               </button>
             </div>
 
@@ -266,7 +154,7 @@ export default function Home() {
                 <p>{t('nextSteps.database')}</p>
               </div>
             </div>
-        </div>
+          </div>
         )}
       </main>
 
