@@ -1,0 +1,129 @@
+{
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Salvar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior"
+  },
+  "game": {
+    "title": "Crônicas de Altherion",
+    "subtitle": "RPG Narrativo com IA",
+    "description": "Crie seu herói e embarque em aventuras épicas",
+    "welcome": "Bem-vindo a Altherion",
+    "createHero": "Crie seu Herói",
+    "heroName": "Digite o nome do seu herói...",
+    "selectClass": "Escolha sua Classe",
+    "createCharacter": "Criar Personagem",
+    "heroOfAltherion": "Herói de Altherion",
+    "welcomeAdventure": "Bem-vindo à sua aventura épica, {name}!",
+    "actionPlaceholder": "O que você faz? (ex: 'Exploro a floresta', 'Ataco o goblin', 'Conversar com o mercador')",
+    "act": "Agir",
+    "generating": "Gerando...",
+    "addXP": "+100 XP (Teste)",
+    "createNewCharacter": "Criar Novo Personagem"
+  },
+  "character": {
+    "level": "Nível",
+    "experience": "XP",
+    "age": "anos",
+    "skills": "Habilidades",
+    "equipment": "Equipamentos",
+    "attributes": {
+      "strength": "Força",
+      "intelligence": "Inteligência",
+      "agility": "Agilidade",
+      "vitality": "Vitalidade",
+      "wisdom": "Sabedoria"
+    }
+  },
+  "classes": {
+    "guerreiro": {
+      "name": "Guerreiro",
+      "description": "Mestre das armas e da força bruta.",
+      "longDescription": "Os guerreiros são combatentes experientes que dominam o uso de armas e armaduras. Eles são a linha de frente em qualquer batalha, protegendo aliados e causando dano devastador aos inimigos."
+    },
+    "mago": {
+      "name": "Mago",
+      "description": "Manipula energia arcana e sabedoria ancestral.",
+      "longDescription": "Os magos são estudiosos das artes arcanas, capazes de manipular as forças fundamentais do universo. Sua sabedoria e conhecimento os tornam poderosos aliados em qualquer aventura."
+    },
+    "ladino": {
+      "name": "Ladino",
+      "description": "Ágil, sorrateiro e mortal nas sombras.",
+      "longDescription": "Os ladinos são mestres da furtividade e da precisão. Eles se movem como sombras, atacando pelos pontos fracos dos inimigos e desaparecendo antes que possam ser detectados."
+    },
+    "arqueiro": {
+      "name": "Arqueiro",
+      "description": "Preciso à distância, caçador nato.",
+      "longDescription": "Os arqueiros são mestres do arco e flecha, capazes de acertar alvos a grandes distâncias com precisão mortal. Sua paciência e concentração os tornam caçadores excepcionais."
+    },
+    "clerigo": {
+      "name": "Clérigo",
+      "description": "Curandeiro e defensor espiritual.",
+      "longDescription": "Os clérigos são servos dos deuses, capazes de canalizar poder divino para curar ferimentos, proteger aliados e combater as forças do mal. Sua fé é sua maior arma."
+    },
+    "paladino": {
+      "name": "Paladino",
+      "description": "Guerreiro sagrado, combina fé e espada.",
+      "longDescription": "Os paladinos são guerreiros sagrados que combinam a força física com o poder divino. Eles são campeões da justiça, protegendo os inocentes e combatendo o mal."
+    },
+    "necromante": {
+      "name": "Necromante",
+      "description": "Usa magia sombria e controla mortos.",
+      "longDescription": "Os necromantes são magos que estudam as artes sombrias da morte e da reanimação. Eles podem controlar mortos-vivos e usar magia negra para seus propósitos."
+    },
+    "barbaro": {
+      "name": "Bárbaro",
+      "description": "Selvagem e imbatível em combate corpo a corpo.",
+      "longDescription": "Os bárbaros são guerreiros selvagens das terras distantes, conhecidos por sua fúria em batalha e resistência sobre-humana. Eles são a personificação da força bruta."
+    },
+    "druida": {
+      "name": "Druida",
+      "description": "Guardião da natureza, pode mudar de forma.",
+      "longDescription": "Os druidas são guardiões da natureza, capazes de se comunicar com animais e plantas. Eles podem se transformar em criaturas selvagens e usar magia natural."
+    },
+    "inventor": {
+      "name": "Inventor",
+      "description": "Mestre de engenhocas e explosivos.",
+      "longDescription": "Os inventores são gênios da engenharia e alquimia, capazes de criar dispositivos incríveis e explosivos devastadores. Eles usam tecnologia e criatividade em combate."
+    }
+  },
+  "modal": {
+    "overview": "Visão Geral",
+    "abilities": "Habilidades",
+    "equipment": "Equipamentos",
+    "lore": "História",
+    "selectClass": "Selecionar Classe",
+    "description": "Descrição",
+    "mainAttributes": "Atributos Principais",
+    "specialties": "Especialidades",
+    "weaknesses": "Fraquezas",
+    "playStyle": "Estilo de Jogo",
+    "initialAbilities": "Habilidades Iniciais",
+    "recommendedEquipment": "Equipamentos Recomendados",
+    "history": "História e Origem",
+    "curiosities": "Curiosidades"
+  },
+  "narrative": {
+    "startAdventure": "Digite sua ação para começar a aventura!",
+    "sceneImage": "Imagem da cena",
+    "event": "Evento",
+    "xpGained": "XP Ganho",
+    "history": "Histórico"
+  },
+  "nextSteps": {
+    "title": "🚀 Próximos Passos",
+    "characterSystem": "✅ Sistema de personagens implementado",
+    "aiIntegration": "✅ Integração com IA (OpenAI)",
+    "narrativeInterface": "✅ Interface de narrativa",
+    "imageGeneration": "✅ Geração de imagens (DALL-E)",
+    "multiplayer": "⏳ Sistema multiplayer",
+    "database": "⏳ Banco de dados (Supabase)"
+  }
+}

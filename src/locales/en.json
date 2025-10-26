@@ -1,0 +1,129 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "game": {
+    "title": "Chronicles of Altherion",
+    "subtitle": "AI Narrative RPG",
+    "description": "Create your hero and embark on epic adventures",
+    "welcome": "Welcome to Altherion",
+    "createHero": "Create your Hero",
+    "heroName": "Enter your hero's name...",
+    "selectClass": "Choose your Class",
+    "createCharacter": "Create Character",
+    "heroOfAltherion": "Hero of Altherion",
+    "welcomeAdventure": "Welcome to your epic adventure, {name}!",
+    "actionPlaceholder": "What do you do? (e.g. 'Explore the forest', 'Attack the goblin', 'Talk to the merchant')",
+    "act": "Act",
+    "generating": "Generating...",
+    "addXP": "+100 XP (Test)",
+    "createNewCharacter": "Create New Character"
+  },
+  "character": {
+    "level": "Level",
+    "experience": "XP",
+    "age": "years",
+    "skills": "Skills",
+    "equipment": "Equipment",
+    "attributes": {
+      "strength": "Strength",
+      "intelligence": "Intelligence",
+      "agility": "Agility",
+      "vitality": "Vitality",
+      "wisdom": "Wisdom"
+    }
+  },
+  "classes": {
+    "warrior": {
+      "name": "Warrior",
+      "description": "Master of weapons and brute force.",
+      "longDescription": "Warriors are experienced fighters who master the use of weapons and armor. They are the front line in any battle, protecting allies and dealing devastating damage to enemies."
+    },
+    "mage": {
+      "name": "Mage",
+      "description": "Manipulates arcane energy and ancestral wisdom.",
+      "longDescription": "Mages are scholars of the arcane arts, capable of manipulating the fundamental forces of the universe. Their wisdom and knowledge make them powerful allies in any adventure."
+    },
+    "rogue": {
+      "name": "Rogue",
+      "description": "Agile, stealthy and deadly in the shadows.",
+      "longDescription": "Rogues are masters of stealth and precision. They move like shadows, attacking enemies' weak points and disappearing before they can be detected."
+    },
+    "archer": {
+      "name": "Archer",
+      "description": "Accurate at range, natural hunter.",
+      "longDescription": "Archers are masters of bow and arrow, capable of hitting targets at great distances with deadly precision. Their patience and concentration make them exceptional hunters."
+    },
+    "cleric": {
+      "name": "Cleric",
+      "description": "Healer and spiritual defender.",
+      "longDescription": "Clerics are servants of the gods, capable of channeling divine power to heal wounds, protect allies and fight the forces of evil. Their faith is their greatest weapon."
+    },
+    "paladin": {
+      "name": "Paladin",
+      "description": "Sacred warrior, combines faith and sword.",
+      "longDescription": "Paladins are sacred warriors who combine physical strength with divine power. They are champions of justice, protecting the innocent and fighting evil."
+    },
+    "necromancer": {
+      "name": "Necromancer",
+      "description": "Uses dark magic and controls the dead.",
+      "longDescription": "Necromancers are mages who study the dark arts of death and reanimation. They can control undead and use black magic for their purposes."
+    },
+    "barbarian": {
+      "name": "Barbarian",
+      "description": "Wild and unbeatable in hand-to-hand combat.",
+      "longDescription": "Barbarians are wild warriors from distant lands, known for their battle fury and superhuman resistance. They are the personification of brute force."
+    },
+    "druid": {
+      "name": "Druid",
+      "description": "Guardian of nature, can change form.",
+      "longDescription": "Druids are guardians of nature, capable of communicating with animals and plants. They can transform into wild creatures and use natural magic."
+    },
+    "inventor": {
+      "name": "Inventor",
+      "description": "Master of gadgets and explosives.",
+      "longDescription": "Inventors are geniuses of engineering and alchemy, capable of creating incredible devices and devastating explosives. They use technology and creativity in combat."
+    }
+  },
+  "modal": {
+    "overview": "Overview",
+    "abilities": "Abilities",
+    "equipment": "Equipment",
+    "lore": "History",
+    "selectClass": "Select Class",
+    "description": "Description",
+    "mainAttributes": "Main Attributes",
+    "specialties": "Specialties",
+    "weaknesses": "Weaknesses",
+    "playStyle": "Play Style",
+    "initialAbilities": "Initial Abilities",
+    "recommendedEquipment": "Recommended Equipment",
+    "history": "History and Origin",
+    "curiosities": "Curiosities"
+  },
+  "narrative": {
+    "startAdventure": "Type your action to start the adventure!",
+    "sceneImage": "Scene image",
+    "event": "Event",
+    "xpGained": "XP Gained",
+    "history": "History"
+  },
+  "nextSteps": {
+    "title": "🚀 Next Steps",
+    "characterSystem": "✅ Character system implemented",
+    "aiIntegration": "✅ AI integration (OpenAI)",
+    "narrativeInterface": "✅ Narrative interface",
+    "imageGeneration": "✅ Image generation (DALL-E)",
+    "multiplayer": "⏳ Multiplayer system",
+    "database": "⏳ Database (Supabase)"
+  }
+}

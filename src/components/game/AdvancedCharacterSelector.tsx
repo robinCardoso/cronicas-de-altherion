@@ -1,0 +1,314 @@
+'use client'
+
+import { useState } from 'react'
+import { CharacterClass } from '@/types/game'
+import { CLASSES } from '@/lib/game/character'
+import { getClassDetails } from '@/lib/game/classDetails'
+import { getRecommendedEquipments } from '@/lib/game/equipment'
+import { getRecommendedSkills } from '@/lib/game/skills'
+import { cn } from '@/lib/utils/cn'
+import { useTranslation } from '@/contexts/LanguageContext'
+
+interface AdvancedCharacterSelectorProps {
+  onSelectClass: (classe: CharacterClass) => void
+  selectedClass?: CharacterClass
+  className?: string
+}
+
+export function AdvancedCharacterSelector({ 
+  onSelectClass, 
+  selectedClass, 
+  className 
+}: AdvancedCharacterSelectorProps) {
+  const { t } = useTranslation()
+  const [activeTab, setActiveTab] = useState<'overview' | 'stats' | 'equipment' | 'abilities'>('overview')
+  
+  const classes = Object.entries(CLASSES) as [CharacterClass, typeof CLASSES[CharacterClass]][]
+  const currentClass = selectedClass || 'guerreiro'
+  const classDetails = getClassDetails(currentClass)
+  const recommendedEquipments = getRecommendedEquipments(currentClass)
+  const recommendedSkills = getRecommendedSkills(currentClass)
+
+  const getClassIcon = (classe: CharacterClass): string => {
+    const icons: Record<CharacterClass, string> = {
+      guerreiro: '⚔️',
+      mago: '🧙‍♂️',
+      ladino: '🗡️',
+      arqueiro: '🏹',
+      clerigo: '⛪',
+      paladino: '🛡️',
+      necromante: '💀',
+      barbaro: '🪓',
+      druida: '🌿',
+      inventor: '⚙️'
+    }
+    return icons[classe]
+  }
+
+  const getColorClasses = (color: string) => {
+    const colors = {
+      red: 'border-red-500 bg-red-900/20',
+      blue: 'border-blue-500 bg-blue-900/20',
+      green: 'border-green-500 bg-green-900/20',
+      yellow: 'border-yellow-500 bg-yellow-900/20',
+      purple: 'border-purple-500 bg-purple-900/20'
+    }
+    return colors[color as keyof typeof colors] || colors.blue
+  }
+
+  return (
+    <div className={cn('w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl border-2 shadow-2xl overflow-hidden', 
+      getColorClasses(classDetails.cor), className)}>
+      
+      {/* Header */}
+      <div className="p-4 border-b border-gray-700 bg-gray-800/50">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-white">{t('game.selectClass')}</h2>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setActiveTab('overview')}
+              className={cn(
+                'px-3 py-1 text-xs font-medium rounded transition-colors',
+                activeTab === 'overview'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              )}
+            >
+              📋 Visão Geral
+            </button>
+            <button
+              onClick={() => setActiveTab('stats')}
+              className={cn(
+                'px-3 py-1 text-xs font-medium rounded transition-colors',
+                activeTab === 'stats'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              )}
+            >
+              📊 Stats
+            </button>
+            <button
+              onClick={() => setActiveTab('equipment')}
+              className={cn(
+                'px-3 py-1 text-xs font-medium rounded transition-colors',
+                activeTab === 'equipment'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              )}
+            >
+              ⚔️ Equipamento
+            </button>
+            <button
+              onClick={() => setActiveTab('abilities')}
+              className={cn(
+                'px-3 py-1 text-xs font-medium rounded transition-colors',
+                activeTab === 'abilities'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              )}
+            >
+              ⚡ Habilidades
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content - 3 Column Layout */}
+      <div className="flex h-[calc(100%-80px)]">
+        
+        {/* Left Column - Class Selection */}
+        <div className="w-1/4 border-r border-gray-700 bg-gray-800/30 overflow-y-auto">
+          <div className="p-4">
+            <h3 className="text-lg font-semibold text-white mb-4">Classes Disponíveis</h3>
+            <div className="space-y-2">
+              {classes.map(([classeKey, classeInfo]) => (
+                <button
+                  key={classeKey}
+                  onClick={() => onSelectClass(classeKey)}
+                  className={cn(
+                    'w-full p-3 rounded-lg border-2 transition-all duration-300 text-left',
+                    'hover:scale-105 hover:shadow-lg',
+                    selectedClass === classeKey
+                      ? 'border-blue-500 bg-blue-900/30'
+                      : 'border-gray-600 bg-gray-700/50 hover:border-gray-500'
+                  )}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="text-2xl">{getClassIcon(classeKey)}</div>
+                    <div>
+                      <h4 className="font-semibold text-white text-sm">
+                        {t(`classes.${classeKey}.name`)}
+                      </h4>
+                      <p className="text-xs text-gray-400">
+                        {classeInfo.atributosPrincipais.map(attr => 
+                          t(`character.attributes.${attr}`)
+                        ).join(' + ')}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Center Column - Character Preview */}
+        <div className="w-1/2 border-r border-gray-700 bg-gray-800/20 flex flex-col">
+          {/* Character Image/Model */}
+          <div className="flex-1 p-6 flex items-center justify-center">
+            <div className="relative w-full h-full max-w-md">
+              <div className="w-full h-80 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl border-2 border-gray-600 flex items-center justify-center shadow-2xl">
+                <div className="text-center text-gray-300">
+                  <div className="text-8xl mb-4">{classDetails.icone}</div>
+                  <h3 className="text-2xl font-bold text-white mb-2">{classDetails.nome}</h3>
+                  <p className="text-sm text-gray-400 mb-4">{classDetails.descricao}</p>
+                  <div className="text-xs text-gray-500">
+                    Imagem será gerada por IA
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Character Stats Preview */}
+          <div className="p-4 border-t border-gray-700 bg-gray-800/30">
+            <h4 className="text-lg font-semibold text-white mb-3">Atributos Principais</h4>
+            <div className="grid grid-cols-2 gap-3">
+              {classDetails.atributosPrincipais.map((attr) => (
+                <div key={attr} className="bg-gray-700 rounded-lg p-3">
+                  <p className="text-xs text-gray-400 capitalize">{attr}</p>
+                  <p className="text-lg font-semibold text-white">
+                    +{classDetails.bonusInicial[attr] || 0}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - Class Details */}
+        <div className="w-1/4 bg-gray-800/30 overflow-y-auto">
+          <div className="p-4">
+            {activeTab === 'overview' && (
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-2">Descrição</h4>
+                  <p className="text-sm text-gray-300 leading-relaxed">
+                    {classDetails.descricaoLonga}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-2">Especialidades</h4>
+                  <div className="space-y-1">
+                    {classDetails.especialidades.map((specialty, index) => (
+                      <div key={index} className="flex items-center space-x-2">
+                        <span className="text-green-400">✓</span>
+                        <span className="text-sm text-gray-300">{specialty}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-2">Fraquezas</h4>
+                  <div className="space-y-1">
+                    {classDetails.fraquezas.map((weakness, index) => (
+                      <div key={index} className="flex items-center space-x-2">
+                        <span className="text-red-400">✗</span>
+                        <span className="text-sm text-gray-300">{weakness}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-2">Estilo de Jogo</h4>
+                  <div className="bg-blue-900/20 border border-blue-500 rounded-lg p-3">
+                    <p className="text-sm text-blue-200">{classDetails.estiloJogo}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'stats' && (
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-white mb-3">Atributos Detalhados</h4>
+                <div className="space-y-2">
+                  {Object.entries(classDetails.bonusInicial).map(([attr, bonus]) => (
+                    <div key={attr} className="flex justify-between items-center bg-gray-700 rounded p-2">
+                      <span className="text-sm text-gray-300 capitalize">{attr}</span>
+                      <span className="text-sm font-semibold text-white">+{bonus}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'equipment' && (
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-white mb-3">Equipamentos Iniciais</h4>
+                <div className="space-y-2">
+                  {recommendedEquipments.map((equipmentId) => (
+                    <div key={equipmentId} className="bg-gray-700 rounded-lg p-3">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-8 h-8 bg-yellow-600 rounded flex items-center justify-center">
+                          <span className="text-white text-sm">⚔️</span>
+                        </div>
+                        <div>
+                          <h5 className="font-semibold text-white text-sm capitalize">
+                            {equipmentId.replace(/([A-Z])/g, ' $1').trim()}
+                          </h5>
+                          <p className="text-xs text-gray-400">Equipamento inicial</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'abilities' && (
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-white mb-3">Habilidades Iniciais</h4>
+                <div className="space-y-2">
+                  {recommendedSkills.map((skillId) => (
+                    <div key={skillId} className="bg-gray-700 rounded-lg p-3">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                          <span className="text-white text-sm">⚡</span>
+                        </div>
+                        <div>
+                          <h5 className="font-semibold text-white text-sm capitalize">
+                            {skillId.replace(/([A-Z])/g, ' $1').trim()}
+                          </h5>
+                          <p className="text-xs text-gray-400">Habilidade inicial</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="p-4 border-t border-gray-700 bg-gray-800/50">
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-gray-400">
+            {selectedClass ? `${t(`classes.${selectedClass}.name`)} selecionado` : 'Selecione uma classe'}
+          </div>
+          <button
+            onClick={() => selectedClass && onSelectClass(selectedClass)}
+            disabled={!selectedClass}
+            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors text-sm"
+          >
+            Selecionar Classe
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
