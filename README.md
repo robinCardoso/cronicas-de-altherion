@@ -1,194 +1,185 @@
-# ⚔️ Crônicas de Altherion
+# 🎮 Crônicas de Altherion - RPG Narrativo com IA
 
-**RPG Narrativo com IA** - Um mundo de fantasia onde vários jogadores participam da mesma história, tomam decisões diferentes e a IA reage considerando as ações de todos, criando um universo persistente e dinâmico.
+Um RPG narrativo moderno que combina inteligência artificial com storytelling imersivo, permitindo que jogadores criem personagens únicos e embarquem em aventuras épicas no reino de Altherion.
 
-## 🚀 Funcionalidades Implementadas
+## ✨ Características Principais
 
-### ✅ **Base Completa (100%)**
-- ✅ **Sistema de Personagens**: 10 classes diferentes com atributos e evolução
-- ✅ **Integração com IA**: Narrativa dinâmica usando OpenAI GPT-4
-- ✅ **Geração de Imagens**: Imagens automáticas das cenas com DALL-E 3
-- ✅ **Interface Imersiva**: Efeitos visuais e animações
-- ✅ **Sistema de XP**: Experiência e evolução de personagens
-- ✅ **Modal de Detalhes**: Interface detalhada para seleção de classes
-- ✅ **Sistema Multilíngue**: Português, Inglês e Espanhol
-- ✅ **Validação de Traduções**: Sistema automático de verificação
+### 🎯 **Sistema de Personagens Avançado**
+- **10 classes únicas**: Guerreiro, Mago, Ladino, Arqueiro, Clérigo, Paladino, Necromante, Bárbaro, Druida, Inventor
+- **Interface de seleção moderna**: Layout de 3 colunas com personagem sempre visível
+- **Sistema de atributos**: Força, Inteligência, Agilidade, Vitalidade, Sabedoria
+- **Equipamentos e habilidades**: Sistema completo de progressão
 
-### ⏳ **Em Desenvolvimento (0%)**
-- ⏳ **Banco de Dados**: Persistência com Supabase
-- ⏳ **Sistema Multiplayer**: Chat global e sincronização
-- ⏳ **Equipamentos Funcionais**: Sistema de inventário
-- ⏳ **Habilidades Funcionais**: Sistema de treinamento
-- ⏳ **Arquitetura Escalável**: Filas e cache para 5.000 jogadores
+### 🤖 **Integração com IA**
+- **OpenAI GPT-4**: Narrativas épicas e imersivas
+- **Google Gemini**: Alternativa gratuita e confiável
+- **Geração de imagens**: Cenas dinâmicas com DALL-E
+- **Sistema de fallback**: Funciona mesmo sem APIs configuradas
 
-## 🛠️ Tecnologias
+### 🌍 **Sistema de Traduções**
+- **3 idiomas**: Português, Inglês, Espanhol
+- **Interface multilíngue**: Troca de idioma em tempo real
+- **Traduções validadas**: Sistema de verificação automática
 
-- **Frontend**: Next.js 14 + React + TypeScript
-- **Estilização**: Tailwind CSS + Framer Motion
-- **IA**: OpenAI API (GPT-4 + DALL-E 3)
-- **Banco**: Supabase (em desenvolvimento)
-- **Tempo Real**: WebSocket (em desenvolvimento)
+### 🎨 **Interface Moderna**
+- **Design responsivo**: Funciona em desktop e mobile
+- **Animações suaves**: Transições e efeitos visuais
+- **Tema escuro**: Interface imersiva e elegante
+- **Navegação intuitiva**: Menus laterais e abas organizadas
 
-## 📋 Pré-requisitos
+## 🚀 Como Executar
 
+### **Pré-requisitos**
 - Node.js 18+ 
-- Conta OpenAI com API Key
-- Conta Supabase (opcional, para persistência)
+- npm ou yarn
+- Chave de API (OpenAI ou Gemini)
 
-## ⚙️ Configuração
+### **Instalação**
 
-### 1. Instalar dependências
+1. **Clone o repositório**
+```bash
+git clone https://github.com/seu-usuario/cronicas-de-altherion.git
+cd cronicas-de-altherion
+```
 
+2. **Instale as dependências**
 ```bash
 npm install
 ```
 
-### 2. Configurar variáveis de ambiente
-
-Crie um arquivo `.env.local` na raiz do projeto:
-
-```env
-# OpenAI API (OBRIGATÓRIO)
-OPENAI_API_KEY=sk-your-openai-api-key-here
-
-# Supabase (OPCIONAL - para persistência)
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
-
-# App Configuration
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+3. **Configure as variáveis de ambiente**
+```bash
+cp env.example .env.local
 ```
 
-### 3. Obter API Key da OpenAI
+4. **Configure suas chaves de API no `.env.local`**
+```env
+# OpenAI API (Pago)
+OPENAI_API_KEY=sk-sua-chave-aqui
 
-1. Acesse [OpenAI Platform](https://platform.openai.com/)
-2. Crie uma conta ou faça login
-3. Vá para "API Keys" no menu
-4. Clique em "Create new secret key"
-5. Copie a chave e cole no arquivo `.env.local`
+# Google Gemini API (Gratuito)
+GEMINI_API_KEY=sua-chave-gemini-aqui
+```
 
-### 4. Executar o projeto
-
+5. **Execute o projeto**
 ```bash
 npm run dev
 ```
 
-Acesse `http://localhost:3000` no seu navegador.
+6. **Acesse no navegador**
+```
+http://localhost:3000
+```
 
-## 🔧 Scripts Disponíveis
+## 🔧 Configuração das APIs
 
-- `npm run dev` - Inicia o servidor de desenvolvimento
-- `npm run build` - Constrói o projeto para produção
-- `npm run start` - Inicia o servidor de produção
-- `npm run check-env` - Verifica a configuração do ambiente
-- `npm run setup` - Alias para check-env
-- `npm run check-i18n` - Valida as traduções
+### **OpenAI API (Recomendado)**
+1. Acesse [OpenAI Platform](https://platform.openai.com/api-keys)
+2. Crie uma nova chave de API
+3. Adicione créditos à sua conta
+4. Cole a chave no `.env.local`
 
-## 🎮 Como Jogar
+### **Google Gemini API (Gratuito)**
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Crie uma nova chave de API
+3. Cole a chave no `.env.local`
 
-1. **Crie seu Herói**: Escolha um nome e uma das 10 classes disponíveis em Altherion
-2. **Digite Ações**: Use linguagem natural para descrever o que seu personagem faz
-3. **Veja a História**: A IA gera narrativas épicas baseadas em suas ações
-4. **Ganhe XP**: Cada ação bem-sucedida concede experiência
-5. **Evolua**: Seu herói sobe de nível conforme ganha experiência
-
-### Exemplos de Ações
-
-- "Exploro a floresta escura de Altherion"
-- "Ataco o goblin com minha espada"
-- "Conversar com o mercador sobre preços"
-- "Usar magia de cura no ferido"
-- "Investigar as ruínas antigas do reino"
-
-## 🏗️ Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
 ```
 src/
-├── app/                    # App Router (Next.js 14)
-│   ├── api/               # API Routes
-│   │   └── story/         # Endpoints de narrativa
-│   └── page.tsx           # Página principal
-├── components/            # Componentes React
-│   ├── game/             # Componentes do jogo
-│   └── ui/               # Componentes de UI
-├── lib/                  # Lógica de negócio
-│   ├── api/              # Integrações com APIs
-│   ├── game/             # Sistema do jogo
-│   └── hooks/            # Hooks personalizados
-└── types/                # Definições TypeScript
+├── app/                    # Páginas Next.js
+├── components/             # Componentes React
+│   ├── game/              # Componentes do jogo
+│   └── ui/                # Componentes de interface
+├── contexts/              # Contextos React
+├── hooks/                 # Hooks customizados
+├── lib/                   # Utilitários e lógica
+│   ├── api/               # Integrações com APIs
+│   ├── game/              # Lógica do jogo
+│   └── utils/             # Funções auxiliares
+├── locales/               # Arquivos de tradução
+└── types/                 # Definições TypeScript
 ```
 
-## 📊 Progresso do Projeto
+## 🎮 Como Jogar
 
-| Categoria | Status | Progresso |
-|-----------|--------|-----------|
-| **Frontend Base** | ✅ Completo | 100% |
-| **Sistema de Personagens** | ✅ Completo | 100% |
-| **Interface/UX** | ✅ Completo | 100% |
-| **Traduções** | ✅ Completo | 100% |
-| **IA Básica** | ✅ Completo | 100% |
-| **Banco de Dados** | ⏳ Pendente | 0% |
-| **Multiplayer** | ⏳ Pendente | 0% |
-| **Equipamentos** | ⏳ Pendente | 0% |
-| **Habilidades** | ⏳ Pendente | 0% |
-| **Arquitetura Escalável** | ⏳ Pendente | 0% |
+1. **Crie seu personagem**
+   - Digite o nome do herói
+   - Escolha uma classe
+   - Explore as habilidades e equipamentos
 
-**Progresso Geral**: 42% (5/12 categorias implementadas)
+2. **Comece sua aventura**
+   - Digite ações na interface de narrativa
+   - A IA gerará respostas épicas
+   - Ganhe XP e evolua seu personagem
 
-## 🎯 Próximos Passos (Fase 1)
+3. **Explore o mundo**
+   - Cada ação gera consequências
+   - Imagens dinâmicas ilustram as cenas
+   - Histórico completo das aventuras
 
-### 🗃️ **1. Banco de Dados (Supabase)**
-- [ ] Configurar Supabase
-- [ ] Criar tabelas principais (stories, players, turns, narratives)
-- [ ] Implementar persistência de personagens
-- [ ] Sistema de login e autenticação
+## 🛠️ Scripts Disponíveis
 
-### ⚙️ **2. Sistema de Equipamentos**
-- [ ] Implementar estrutura de equipamentos
-- [ ] Criar função de equipar
-- [ ] Adicionar bonificações de atributos
-- [ ] Sistema de inventário funcional
+```bash
+# Desenvolvimento
+npm run dev          # Inicia servidor de desenvolvimento
+npm run build        # Constrói para produção
+npm run start        # Inicia servidor de produção
 
-### 🌀 **3. Sistema de Habilidades**
-- [ ] Implementar habilidades básicas
-- [ ] Criar sistema de treinamento
-- [ ] Adicionar efeitos de habilidades
-- [ ] Habilidades ativas e passivas
+# Qualidade de código
+npm run lint         # Executa ESLint
+npm run type-check   # Verifica tipos TypeScript
 
-## 📚 Documentação
+# Utilitários
+node scripts/setup-env.js        # Configura arquivo .env.local
+node scripts/test-env.js         # Testa variáveis de ambiente
+node scripts/test-api.js         # Testa APIs de IA
+node scripts/validate-translations.js  # Valida traduções
+```
 
-- 📊 [Análise Comparativa](docs/ANALISE-COMPARATIVA.md) - Comparação detalhada com o LEIA-ME
-- 🌍 [Sistema de Traduções](docs/i18n.md) - Documentação completa do i18n
-- 🛡️ [Garantia de Traduções](docs/translation-guarantee.md) - Sistema de validação
+## 🌟 Funcionalidades Implementadas
 
-## 🐛 Solução de Problemas
+- ✅ **Sistema de personagens completo**
+- ✅ **Integração com IA (OpenAI + Gemini)**
+- ✅ **Interface de seleção avançada**
+- ✅ **Sistema de traduções**
+- ✅ **Geração de imagens**
+- ✅ **Sistema de XP e progressão**
+- ✅ **Interface responsiva**
+- ✅ **Sistema de fallback**
 
-### Erro de API Key
-- Verifique se a `OPENAI_API_KEY` está correta no `.env.local`
-- Certifique-se de que tem créditos na conta OpenAI
+## 🚧 Próximas Funcionalidades
 
-### Erro de CORS
-- O projeto roda em `localhost:3000` por padrão
-- Verifique se não há conflitos de porta
+- ⏳ **Sistema multiplayer**
+- ⏳ **Banco de dados (Supabase)**
+- ⏳ **Sistema de combate**
+- ⏳ **Inventário avançado**
+- ⏳ **Sistema de missões**
+- ⏳ **Modo offline**
 
-### Imagens não carregam
-- Verifique se a API Key tem acesso ao DALL-E 3
-- Algumas imagens podem demorar para gerar
+## 🤝 Contribuindo
 
-## 📝 Licença
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
-Este projeto é open source e está disponível sob a licença MIT.
+## 📄 Licença
 
-## 🤝 Contribuição
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
-Contribuições são bem-vindas! Sinta-se à vontade para:
+## 🙏 Agradecimentos
 
-1. Reportar bugs
-2. Sugerir novas funcionalidades
-3. Enviar pull requests
-4. Melhorar a documentação
+- **OpenAI** pela API GPT-4
+- **Google** pela API Gemini
+- **Next.js** pelo framework React
+- **Tailwind CSS** pelo sistema de estilos
+- **Framer Motion** pelas animações
 
 ---
 
-**Divirta-se explorando Altherion! ⚔️✨**
+**Criado com ❤️ para a comunidade de RPG e IA**
+
+⚔️ **Bem-vindos a Altherion!** ⚔️
