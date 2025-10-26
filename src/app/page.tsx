@@ -54,9 +54,7 @@ export default function Home() {
       <main className="max-w-6xl mx-auto p-6">
         {!showGame ? (
           /* Menu Principal */
-          <MainMenu onStartGame={handleStartGame}>
-            {/* Conteúdo do menu será renderizado pelo MainMenu */}
-          </MainMenu>
+          <MainMenu onStartGame={handleStartGame} />
         ) : !character ? (
           /* Criação de Personagem */
           <div className="space-y-8">

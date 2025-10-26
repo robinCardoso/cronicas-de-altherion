@@ -38,9 +38,8 @@ export async function generateNarrative(
       return {
         narrative: `Você, ${character.nome}, ${playerAction.toLowerCase()}. O que você faz a seguir?`,
         imageUrl: '/images/placeholder-scene.jpg',
-        timestamp: new Date().toISOString(),
-        character: character.nome,
-        action: playerAction
+        sceneMood: 'tranquilo',
+        timeOfDay: 'dia'
       }
   }
 }
@@ -51,10 +50,12 @@ export async function generateImage(prompt: string): Promise<string> {
   
   switch (provider) {
     case 'openai':
-      return openaiGenerateImage(prompt)
+      const openaiResult = await openaiGenerateImage(prompt, 'tranquilo', 'dia')
+      return openaiResult || '/images/placeholder-scene.jpg'
     
     case 'gemini':
-      return geminiGenerateImage(prompt)
+      const geminiResult = await geminiGenerateImage(prompt)
+      return geminiResult || '/images/placeholder-scene.jpg'
     
     case 'none':
     default:

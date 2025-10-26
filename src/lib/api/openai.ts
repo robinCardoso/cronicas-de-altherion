@@ -69,7 +69,7 @@ export async function generateNarrative(
       sceneMood,
       timeOfDay,
       event,
-      xp: calculateXP(event, action)
+      xp: event ? calculateXP(event, action) : 10
     }
   } catch (error) {
     console.error('Erro ao gerar narrativa:', error)
@@ -101,7 +101,7 @@ export async function generateSceneImage(
       n: 1,
     })
 
-    return response.data[0]?.url || null
+    return response.data?.[0]?.url || null
   } catch (error) {
     console.error('Erro ao gerar imagem:', error)
     return null
@@ -115,8 +115,7 @@ function buildNarrativePrompt(
   worldState?: any,
   otherPlayersActions?: string[]
 ): string {
-  const classInfo = character.classe
-  const level = character.level
+  const { classe: classInfo, level } = character
   
   let prompt = `
 CONTEXTO DO PERSONAGEM:

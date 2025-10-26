@@ -55,11 +55,6 @@ export const EQUIPAMENTOS: Record<string, Equipment> = {
     bonus: { inteligencia: 2, sabedoria: 1 },
     tipo: 'armadura'
   },
-  armaduraCouro: {
-    nome: 'Armadura de Couro',
-    bonus: { vitalidade: 2 },
-    tipo: 'armadura'
-  },
 
   // Acessórios
   anelForca: {

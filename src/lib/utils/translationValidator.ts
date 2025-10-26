@@ -6,7 +6,7 @@ interface TranslationStructure {
 }
 
 // Interface para resultado da validação
-interface ValidationResult {
+export interface ValidationResult {
   isValid: boolean
   missingKeys: string[]
   extraKeys: string[]
@@ -15,7 +15,7 @@ interface ValidationResult {
 }
 
 // Interface para relatório de cobertura
-interface CoverageReport {
+export interface CoverageReport {
   language: Language
   totalKeys: number
   translatedKeys: number

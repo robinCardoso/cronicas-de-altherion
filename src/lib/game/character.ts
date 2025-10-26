@@ -5,61 +5,61 @@ export const CLASSES: Record<CharacterClass, ClassInfo> = {
   guerreiro: {
     nome: 'Guerreiro',
     descricao: 'Mestre das armas e da força bruta.',
-    atributosPrincipais: ['strength', 'vitality'],
+    atributosPrincipais: ['forca', 'vitalidade'],
     bonusInicial: { forca: 3, vitalidade: 2 }
   },
   mago: {
     nome: 'Mago',
     descricao: 'Manipula energia arcana e sabedoria ancestral.',
-    atributosPrincipais: ['intelligence', 'wisdom'],
+    atributosPrincipais: ['inteligencia', 'sabedoria'],
     bonusInicial: { inteligencia: 3, sabedoria: 2 }
   },
   ladino: {
     nome: 'Ladino',
     descricao: 'Ágil, sorrateiro e mortal nas sombras.',
-    atributosPrincipais: ['agility', 'intelligence'],
+    atributosPrincipais: ['agilidade', 'inteligencia'],
     bonusInicial: { agilidade: 3, inteligencia: 2 }
   },
   arqueiro: {
     nome: 'Arqueiro',
     descricao: 'Preciso à distância, caçador nato.',
-    atributosPrincipais: ['agility', 'wisdom'],
+    atributosPrincipais: ['agilidade', 'sabedoria'],
     bonusInicial: { agilidade: 3, sabedoria: 2 }
   },
   clerigo: {
     nome: 'Clérigo',
     descricao: 'Curandeiro e defensor espiritual.',
-    atributosPrincipais: ['wisdom', 'vitality'],
+    atributosPrincipais: ['sabedoria', 'vitalidade'],
     bonusInicial: { sabedoria: 3, vitalidade: 2 }
   },
   paladino: {
     nome: 'Paladino',
     descricao: 'Guerreiro sagrado, combina fé e espada.',
-    atributosPrincipais: ['strength', 'wisdom'],
+    atributosPrincipais: ['forca', 'sabedoria'],
     bonusInicial: { forca: 3, sabedoria: 2 }
   },
   necromante: {
     nome: 'Necromante',
     descricao: 'Usa magia sombria e controla mortos.',
-    atributosPrincipais: ['intelligence', 'wisdom'],
+    atributosPrincipais: ['inteligencia', 'sabedoria'],
     bonusInicial: { inteligencia: 3, sabedoria: 2 }
   },
   barbaro: {
     nome: 'Bárbaro',
     descricao: 'Selvagem e imbatível em combate corpo a corpo.',
-    atributosPrincipais: ['strength', 'vitality'],
+    atributosPrincipais: ['forca', 'vitalidade'],
     bonusInicial: { forca: 3, vitalidade: 2 }
   },
   druida: {
     nome: 'Druida',
     descricao: 'Guardião da natureza, pode mudar de forma.',
-    atributosPrincipais: ['wisdom', 'vitality'],
+    atributosPrincipais: ['sabedoria', 'vitalidade'],
     bonusInicial: { sabedoria: 3, vitalidade: 2 }
   },
   inventor: {
     nome: 'Inventor',
     descricao: 'Mestre de engenhocas e explosivos.',
-    atributosPrincipais: ['intelligence', 'agility'],
+    atributosPrincipais: ['inteligencia', 'agilidade'],
     bonusInicial: { inteligencia: 3, agilidade: 2 }
   }
 }

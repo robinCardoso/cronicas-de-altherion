@@ -13,10 +13,9 @@ interface MenuOption {
 
 interface MainMenuProps {
   onStartGame: () => void
-  children: React.ReactNode
 }
 
-export function MainMenu({ onStartGame, children }: MainMenuProps) {
+export function MainMenu({ onStartGame }: MainMenuProps) {
   const { t, isLoading } = useTranslation()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
 
@@ -362,7 +361,6 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
       </div>
 
       {/* Renderizar o conteúdo do jogo quando não estiver no menu */}
-      {children}
     </div>
   )
 }

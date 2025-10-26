@@ -31,8 +31,7 @@ export function useLanguage() {
 
 // Hook para tradução
 export function useTranslation() {
-  const { t } = useLanguage()
-  return { t }
+  return useLanguage()
 }
 
 // Props do provider

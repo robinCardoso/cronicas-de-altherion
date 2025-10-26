@@ -82,9 +82,8 @@ Gere uma narrativa épica baseada na ação do jogador. Seja criativo e imersivo
     return {
       narrative,
       imageUrl,
-      timestamp: new Date().toISOString(),
-      character: character.nome,
-      action: playerAction
+      sceneMood: 'tranquilo',
+      timeOfDay: 'dia'
     }
 
   } catch (error) {
@@ -94,9 +93,8 @@ Gere uma narrativa épica baseada na ação do jogador. Seja criativo e imersivo
     return {
       narrative: `Você, ${character.nome}, ${playerAction.toLowerCase()}. O que você faz a seguir?`,
       imageUrl: '/images/placeholder-scene.jpg',
-      timestamp: new Date().toISOString(),
-      character: character.nome,
-      action: playerAction
+      sceneMood: 'tranquilo',
+      timeOfDay: 'dia'
     }
   }
 }
