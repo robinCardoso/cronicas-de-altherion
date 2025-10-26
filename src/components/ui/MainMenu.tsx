@@ -25,17 +25,17 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
       icon: '🎭',
       description: 'Descubra os diferenciais do nosso jogo',
       component: (
-        <div className="space-y-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-4">
+        <div className="space-y-6">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
               🎭 Por que um RPG Narrativo?
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Descubra a magia de criar sua própria história com inteligência artificial
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
             {/* Coluna Esquerda */}
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
@@ -155,17 +155,17 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
       icon: '⚔️',
       description: 'Conheça as 10 classes únicas do jogo',
       component: (
-        <div className="space-y-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-4">
+        <div className="space-y-6">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
               ⚔️ Classes Disponíveis
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Escolha entre 10 classes únicas, cada uma com habilidades e estilos de jogo distintos
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { name: 'Guerreiro', icon: '🛡️', desc: 'Mestre do combate corpo a corpo' },
               { name: 'Mago', icon: '🔮', desc: 'Manipulador das artes arcanas' },
@@ -178,11 +178,11 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
               { name: 'Druida', icon: '🌿', desc: 'Guardião da natureza e suas criaturas' },
               { name: 'Inventor', icon: '⚙️', desc: 'Criador de engenhocas e artefatos' }
             ].map((classe, index) => (
-              <div key={index} className="bg-gray-800/50 rounded-xl p-6 border border-gray-600 hover:border-purple-500/50 transition-colors">
+              <div key={index} className="bg-gray-800/50 rounded-lg p-4 border border-gray-600 hover:border-purple-500/50 transition-colors">
                 <div className="text-center">
-                  <div className="text-4xl mb-3">{classe.icon}</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{classe.name}</h3>
-                  <p className="text-gray-300 text-sm">{classe.desc}</p>
+                  <div className="text-2xl mb-2">{classe.icon}</div>
+                  <h3 className="text-lg font-semibold text-white mb-1">{classe.name}</h3>
+                  <p className="text-gray-300 text-xs">{classe.desc}</p>
                 </div>
               </div>
             ))}
@@ -205,17 +205,17 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
       icon: '📖',
       description: 'Aprenda os conceitos básicos do jogo',
       component: (
-        <div className="space-y-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-4">
+        <div className="space-y-6">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
               📖 Como Jogar
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Aprenda os conceitos básicos para começar sua aventura em Altherion
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {[
               {
                 step: '1',
@@ -242,16 +242,16 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
                 icon: '🌟'
               }
             ].map((item, index) => (
-              <div key={index} className="flex items-start space-x-6 bg-gray-800/50 rounded-xl p-6 border border-gray-600">
-                <div className="text-4xl">{item.icon}</div>
+              <div key={index} className="flex items-start space-x-4 bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+                <div className="text-2xl">{item.icon}</div>
                 <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <span className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                  <div className="flex items-center space-x-2 mb-1">
+                    <span className="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs">
                       {item.step}
                     </span>
-                    <h3 className="text-xl font-semibold text-white">{item.title}</h3>
+                    <h3 className="text-lg font-semibold text-white">{item.title}</h3>
                   </div>
-                  <p className="text-gray-300">{item.description}</p>
+                  <p className="text-gray-300 text-sm">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -295,33 +295,33 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header do Menu Principal */}
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-4">
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
           🎮 Crônicas de Altherion
         </h1>
-        <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+        <p className="text-lg text-gray-300 max-w-2xl mx-auto">
           Bem-vindo ao mundo de Altherion! Escolha uma opção para começar sua aventura épica.
         </p>
       </div>
 
       {/* Grid de Opções do Menu */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
         {menuOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => setActiveMenu(option.id)}
-            className="group bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20"
+            className="group bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-4 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20"
           >
             <div className="text-center">
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
                 {option.icon}
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors">
+              <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-purple-300 transition-colors">
                 {option.title}
               </h3>
-              <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">
+              <p className="text-gray-400 text-xs group-hover:text-gray-300 transition-colors">
                 {option.description}
               </p>
             </div>
@@ -331,16 +331,16 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
         {/* Botão Principal - Começar Jogo */}
         <button
           onClick={onStartGame}
-          className="group bg-gradient-to-br from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-xl p-6 border border-purple-500/50 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-purple-500/30"
+          className="group bg-gradient-to-br from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-lg p-4 border border-purple-500/50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30"
         >
           <div className="text-center">
-            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
+            <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
               ⚔️
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-purple-100 transition-colors">
+            <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-purple-100 transition-colors">
               Começar Aventura
             </h3>
-            <p className="text-purple-100 text-sm group-hover:text-white transition-colors">
+            <p className="text-purple-100 text-xs group-hover:text-white transition-colors">
               Crie seu personagem e embarque na jornada
             </p>
           </div>
