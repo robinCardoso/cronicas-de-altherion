@@ -8,18 +8,26 @@ import { AdvancedCharacterSelector } from '@/components/game/AdvancedCharacterSe
 import { NarrativeWindow } from '@/components/game/NarrativeWindow'
 import { Logo } from '@/components/ui/Logo'
 import { MainMenu } from '@/components/ui/MainMenu'
+import { StoryInitializer } from '@/components/game/StoryInitializer'
 
 export default function Home() {
   const [character, setCharacter] = useState<Character | null>(null)
   const [selectedClass, setSelectedClass] = useState<CharacterClass | null>(null)
   const [characterName, setCharacterName] = useState('')
   const [showGame, setShowGame] = useState(false)
+  const [showStoryInitializer, setShowStoryInitializer] = useState(false)
 
   const handleCreateCharacter = () => {
     if (!selectedClass || !characterName.trim()) return
     
     const newCharacter = createCharacter(characterName.trim(), selectedClass)
     setCharacter(newCharacter)
+    setShowStoryInitializer(true)
+  }
+
+  const handleStoryComplete = (updatedCharacter: Character) => {
+    setCharacter(updatedCharacter)
+    setShowStoryInitializer(false)
   }
 
   const handleAddXP = () => {
@@ -92,6 +100,12 @@ export default function Home() {
               </button>
             </div>
           </div>
+        ) : showStoryInitializer ? (
+          /* Tutorial Narrativo */
+          <StoryInitializer 
+            character={character} 
+            onStoryComplete={handleStoryComplete}
+          />
         ) : (
           /* Personagem Criado */
           <div className="space-y-8">
