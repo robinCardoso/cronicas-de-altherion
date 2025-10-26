@@ -2,6 +2,60 @@
 
 Um RPG narrativo moderno que combina inteligência artificial com storytelling imersivo, permitindo que jogadores criem personagens únicos e embarquem em aventuras épicas no reino de Altherion.
 
+## 🎭 Por que um RPG Narrativo com IA?
+
+### **🧠 O Diferencial: Experiência Pessoal e Emocional**
+
+Nos jogos 3D ou 2D tradicionais, o jogador **vê** uma história — mas não **cria** uma.
+No **Crônicas de Altherion**, o jogador **escreve o próprio destino**.
+A IA se adapta às suas escolhas, e cada jogada é única, como um livro sendo escrito em tempo real.
+
+🎮 **Nos jogos comuns**: o jogador consome a história.  
+🧠 **No nosso jogo**: o jogador se torna o autor da história.
+
+Isso transforma o jogo em uma experiência emocionalmente mais profunda — algo que o jogador lembra, e não apenas "zerou".
+
+### **🗺️ Mundo Infinito e Personalizável**
+
+Um jogo 3D precisa de:
+- Texturas, Modelos, Físicas, Missões pré-definidas
+
+O nosso jogo precisa apenas de:
+- **Imaginação + narrativa gerada pela IA**
+
+Isso significa que o mundo nunca acaba:
+- Um jogador pode explorar uma floresta e encontrar um templo perdido
+- Outro jogador pode achar uma vila amaldiçoada no mesmo lugar
+- O sistema cresce organicamente, sem precisar de assets ou mapas renderizados
+
+### **🕰️ Imersão Psicológica, Não Visual**
+
+Muitos pensam que "imersão" é só gráfico bonito.  
+Mas imersão é quando o jogador esquece que está jogando.
+
+Em um RPG narrativo com IA:
+- O jogador sente que está em um **livro vivo**
+- Ele vê as consequências de cada ação
+- Ele se envolve emocionalmente com os personagens
+
+**Isso é imersão psicológica, não visual.**
+
+### **🧙‍♂️ A Magia da IA: O Mundo Reage ao Jogador**
+
+Com IA generativa:
+- O mundo "ouve" o jogador
+- NPCs lembram o que ele fez
+- Locais e eventos se adaptam às ações passadas
+
+Isso é algo que nenhum jogo 3D consegue fazer de forma profunda sem IA narrativa.
+
+### **⚙️ Leve, Acessível e Escalável**
+
+- Roda no navegador (até em celular)
+- Não exige GPU
+- Pode ter milhares de jogadores simultâneos
+- O servidor lida só com texto, contexto e lógica
+
 ## ✨ Características Principais
 
 ### 🎯 **Sistema de Personagens Avançado**
