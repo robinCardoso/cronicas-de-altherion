@@ -28,6 +28,35 @@
     "addXP": "+100 XP (Prueba)",
     "createNewCharacter": "Crear Nuevo Personaje"
   },
+  "menu": {
+    "title": "Crónicas de Altherion",
+    "subtitle": "¡Bienvenido al mundo de Altherion! Elige una opción para comenzar tu aventura épica.",
+    "manifesto": {
+      "title": "¿Por qué RPG Narrativo?",
+      "description": "Descubre los diferenciales de nuestro juego",
+      "mainTitle": "¿Por qué un RPG Narrativo?",
+      "subtitle": "Descubre la magia de crear tu propia historia con inteligencia artificial"
+    },
+    "classes": {
+      "title": "Clases Disponibles",
+      "description": "Conoce las 10 clases únicas del juego",
+      "mainTitle": "Clases Disponibles",
+      "subtitle": "Elige entre 10 clases únicas, cada una con habilidades y estilos de juego distintos"
+    },
+    "tutorial": {
+      "title": "Cómo Jugar",
+      "description": "Aprende los conceptos básicos del juego",
+      "mainTitle": "Cómo Jugar",
+      "subtitle": "Aprende los conceptos básicos para comenzar tu aventura en Altherion"
+    },
+    "startGame": {
+      "title": "Comenzar Aventura",
+      "description": "Crea tu personaje y embárcate en la jornada"
+    },
+    "back": "Volver al Menú",
+    "startButton": "Comenzar a Jugar",
+    "startNow": "Comenzar Ahora"
+  },
   "character": {
     "level": "Nivel",
     "experience": "XP",

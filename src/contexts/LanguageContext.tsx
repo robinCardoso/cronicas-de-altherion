@@ -75,6 +75,12 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
 
   // Função para obter tradução
   const t = (key: string, params?: Record<string, string | number>): string => {
+    // Debug: verificar se as traduções estão carregadas
+    if (Object.keys(translations).length === 0) {
+      console.warn('Translations not loaded yet for key:', key)
+      return key
+    }
+
     const keys = key.split('.')
     let value: any = translations
 
@@ -83,7 +89,8 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
       if (value && typeof value === 'object' && k in value) {
         value = value[k]
       } else {
-        // Fallback para a chave original se não encontrar
+        // Debug: mostrar qual chave não foi encontrada
+        console.warn(`Translation key not found: ${key} (missing: ${k})`)
         return key
       }
     }
@@ -99,6 +106,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     }
 
     // Se não encontrou, retorna a chave
+    console.warn(`Translation value is not a string for key: ${key}`)
     return key
   }
 
