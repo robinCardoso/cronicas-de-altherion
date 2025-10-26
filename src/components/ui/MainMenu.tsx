@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslation } from '@/contexts/LanguageContext'
 
 interface MenuOption {
   id: string
@@ -16,22 +17,23 @@ interface MainMenuProps {
 }
 
 export function MainMenu({ onStartGame, children }: MainMenuProps) {
+  const { t } = useTranslation()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
 
   const menuOptions: MenuOption[] = [
     {
       id: 'manifesto',
-      title: 'Por que RPG Narrativo?',
+      title: t('menu.manifesto.title'),
       icon: '🎭',
-      description: 'Descubra os diferenciais do nosso jogo',
+      description: t('menu.manifesto.description'),
       component: (
         <div className="space-y-6">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
-              🎭 Por que um RPG Narrativo?
+              🎭 {t('menu.manifesto.mainTitle')}
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Descubra a magia de criar sua própria história com inteligência artificial
+              {t('menu.manifesto.subtitle')}
             </p>
           </div>
 
@@ -151,17 +153,17 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
     },
     {
       id: 'classes',
-      title: 'Classes Disponíveis',
+      title: t('menu.classes.title'),
       icon: '⚔️',
-      description: 'Conheça as 10 classes únicas do jogo',
+      description: t('menu.classes.description'),
       component: (
         <div className="space-y-6">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
-              ⚔️ Classes Disponíveis
+              ⚔️ {t('menu.classes.mainTitle')}
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Escolha entre 10 classes únicas, cada uma com habilidades e estilos de jogo distintos
+              {t('menu.classes.subtitle')}
             </p>
           </div>
 
@@ -193,7 +195,7 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
               onClick={onStartGame}
               className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
             >
-              🎮 Começar a Jogar
+              🎮 {t('menu.startButton')}
             </button>
           </div>
         </div>
@@ -201,17 +203,17 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
     },
     {
       id: 'como-jogar',
-      title: 'Como Jogar',
+      title: t('menu.tutorial.title'),
       icon: '📖',
-      description: 'Aprenda os conceitos básicos do jogo',
+      description: t('menu.tutorial.description'),
       component: (
         <div className="space-y-6">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
-              📖 Como Jogar
+              📖 {t('menu.tutorial.mainTitle')}
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Aprenda os conceitos básicos para começar sua aventura em Altherion
+              {t('menu.tutorial.subtitle')}
             </p>
           </div>
 
@@ -262,7 +264,7 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
               onClick={onStartGame}
               className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
             >
-              🚀 Começar Agora
+              🚀 {t('menu.startNow')}
             </button>
           </div>
         </div>
@@ -282,7 +284,7 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
             className="flex items-center space-x-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
           >
             <span>←</span>
-            <span>Voltar ao Menu</span>
+            <span>{t('menu.back')}</span>
           </button>
         </div>
 
@@ -299,10 +301,10 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
       {/* Header do Menu Principal */}
       <div className="text-center mb-6">
         <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-3">
-          🎮 Crônicas de Altherion
+          🎮 {t('menu.title')}
         </h1>
         <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-          Bem-vindo ao mundo de Altherion! Escolha uma opção para começar sua aventura épica.
+          {t('menu.subtitle')}
         </p>
       </div>
 
@@ -338,10 +340,10 @@ export function MainMenu({ onStartGame, children }: MainMenuProps) {
               ⚔️
             </div>
             <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-purple-100 transition-colors">
-              Começar Aventura
+              {t('menu.startGame.title')}
             </h3>
             <p className="text-purple-100 text-xs group-hover:text-white transition-colors">
-              Crie seu personagem e embarque na jornada
+              {t('menu.startGame.description')}
             </p>
           </div>
         </button>
