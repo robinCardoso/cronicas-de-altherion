@@ -17,8 +17,20 @@ interface MainMenuProps {
 }
 
 export function MainMenu({ onStartGame, children }: MainMenuProps) {
-  const { t } = useTranslation()
+  const { t, isLoading } = useTranslation()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
+
+  // Mostrar loading enquanto as traduções carregam
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="text-4xl mb-4">⚔️</div>
+          <p className="text-gray-300">Carregando traduções...</p>
+        </div>
+      </div>
+    )
+  }
 
   const menuOptions: MenuOption[] = [
     {

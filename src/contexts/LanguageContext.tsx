@@ -51,16 +51,19 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     const loadTranslations = async () => {
       try {
         setIsLoading(true)
+        console.log(`Loading translations for language: ${language}`)
         const response = await fetch(`/locales/${language}.json`)
         if (!response.ok) {
           throw new Error(`Failed to load ${language} translations`)
         }
         const data = await response.json()
+        console.log('Loaded translations:', data)
         setTranslations(data)
       } catch (error) {
         console.error('Error loading translations:', error)
         // Fallback para português
         if (language !== 'pt') {
+          console.log('Falling back to Portuguese translations')
           const fallbackResponse = await fetch('/locales/pt.json')
           const fallbackData = await fallbackResponse.json()
           setTranslations(fallbackData)
@@ -122,6 +125,9 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     const savedLanguage = localStorage.getItem('altherion-language') as Language
     if (savedLanguage && ['pt', 'en', 'es'].includes(savedLanguage)) {
       setLanguageState(savedLanguage)
+    } else {
+      // Se não há idioma salvo, carrega português imediatamente
+      setLanguageState('pt')
     }
   }, [])
 
