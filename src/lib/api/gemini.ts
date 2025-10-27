@@ -5,25 +5,19 @@ const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/
 
 // Contexto base do mundo
 const WORLD_CONTEXT = `
-Você é o narrador de um RPG de fantasia medieval chamado "Crônicas de Altherion". 
-Este é um mundo mágico e perigoso onde heróis enfrentam desafios épicos no reino de Altherion.
+Você é um narrador mestre de RPG épico especializado em criar narrativas envolventes e detalhadas.
 
 REGRAS IMPORTANTES:
-- Sempre responda em português brasileiro
-- Seja descritivo e imersivo
-- Mantenha a consistência do mundo
-- Considere as ações dos jogadores
-- Gere consequências realistas
-- Use um tom épico e envolvente
-- Limite a resposta a 2-3 parágrafos
-- Sempre termine com uma pergunta ou situação que exija ação do jogador
+1. NUNCA apenas repita a ação do jogador
+2. SEMPRE construa uma narrativa rica com detalhes visuais, sonoros e atmosféricos
+3. Crie consequências interessantes para cada ação
+4. Use linguagem épica e cinematográfica
+5. Inclua elementos de suspense, descoberta ou conflito
+6. Termine sempre com uma pergunta ou situação que convide à próxima ação
 
-MUNDO DE ALTHERION:
-- Reino medieval com magia e criaturas fantásticas
-- Cidades, florestas, montanhas e masmorras
-- NPCs com personalidades únicas
-- Sistema de magia baseado em elementos
-- Criaturas: dragões, orcs, elfos, anões, etc.
+EXEMPLO DE RESPOSTA BOA:
+Jogador: "quero desbravar a floresta"
+Narrador: "Você se aventura pela densa floresta de Pedravale, onde os raios de sol filtram entre as folhas antigas. Entre as árvores centenárias, você encontra pegadas frescas de lobos e ouve sons misteriosos ecoando na distância. De repente, um grupo de três bandidos armados aparece à sua frente, bloqueando o caminho estreito. Eles parecem nervosos e carregam espadas enferrujadas. O líder grita: 'Ninguém passa por aqui sem pagar pedágio!' O que você faz?"
 `
 
 export async function generateNarrative(
@@ -32,21 +26,12 @@ export async function generateNarrative(
   previousContext?: string
 ): Promise<NarrativeResponse> {
   try {
-    const prompt = `
-${WORLD_CONTEXT}
+    const prompt = `${WORLD_CONTEXT}
 
-PERSONAGEM:
-- Nome: ${character.nome}
-- Classe: ${character.classe}
-- Nível: ${character.level}
-- Atributos: ${JSON.stringify(character.atributos)}
-
+PERSONAGEM: ${character.nome} (${character.classe}, Nível ${character.level})
 AÇÃO DO JOGADOR: "${playerAction}"
 
-${previousContext ? `CONTEXTO ANTERIOR: ${previousContext}` : ''}
-
-Gere uma narrativa épica baseada na ação do jogador. Seja criativo e imersivo!
-`
+Crie uma narrativa épica e envolvente que desenvolva a história baseada na ação do jogador. Seja criativo, detalhado e cinematográfico!`
 
     const response = await fetch(`${GEMINI_API_URL}?key=${process.env.GEMINI_API_KEY}`, {
       method: 'POST',
@@ -63,7 +48,7 @@ Gere uma narrativa épica baseada na ação do jogador. Seja criativo e imersivo
           temperature: 0.8,
           topK: 40,
           topP: 0.95,
-          maxOutputTokens: 1024,
+          maxOutputTokens: 1000, // Aumentado para aproveitar o poder do Gemini 2.5 Flash
         }
       })
     })
@@ -73,7 +58,42 @@ Gere uma narrativa épica baseada na ação do jogador. Seja criativo e imersivo
     }
 
     const data = await response.json()
+    console.log('🔍 Resposta Gemini:', JSON.stringify(data, null, 2))
+    
+    // Verificar se há candidatos na resposta
+    if (!data.candidates || data.candidates.length === 0) {
+      console.error('❌ Estrutura da resposta:', data)
+      throw new Error('Nenhum candidato encontrado na resposta do Gemini')
+    }
+    
+    // Verificar se há conteúdo na resposta
+    if (!data.candidates[0].content || !data.candidates[0].content.parts || data.candidates[0].content.parts.length === 0) {
+      console.error('❌ Estrutura do candidato:', data.candidates[0])
+      
+      // Se atingiu o limite de tokens, usar fallback
+      if (data.candidates[0].finishReason === 'MAX_TOKENS') {
+        console.log('⚠️ Gemini atingiu limite de tokens, usando fallback')
+        return {
+          narrative: `Você, ${character.nome}, ${playerAction}. O que você faz a seguir?`,
+          imageUrl: '/images/placeholder-scene.jpg',
+          xp: 10,
+          sceneMood: 'tranquilo',
+          timeOfDay: 'dia'
+        }
+      }
+      
+      throw new Error('Estrutura de conteúdo inválida na resposta do Gemini')
+    }
+    
     const narrative = data.candidates[0].content.parts[0].text
+    
+    // Verificar se o texto foi gerado
+    if (!narrative || narrative.trim() === '') {
+      console.error('❌ Texto vazio na resposta:', data)
+      throw new Error('Texto não foi gerado pelo Gemini')
+    }
+    
+    console.log('✅ Narrativa gerada:', narrative.substring(0, 100) + '...')
 
     // Gerar imagem baseada na narrativa
     const imagePrompt = `Fantasy RPG scene: ${narrative.substring(0, 200)}...`
@@ -82,6 +102,7 @@ Gere uma narrativa épica baseada na ação do jogador. Seja criativo e imersivo
     return {
       narrative,
       imageUrl,
+      xp: Math.floor(Math.random() * 20) + 5,
       sceneMood: 'tranquilo',
       timeOfDay: 'dia'
     }
@@ -93,6 +114,7 @@ Gere uma narrativa épica baseada na ação do jogador. Seja criativo e imersivo
     return {
       narrative: `Você, ${character.nome}, ${playerAction.toLowerCase()}. O que você faz a seguir?`,
       imageUrl: '/images/placeholder-scene.jpg',
+      xp: 10,
       sceneMood: 'tranquilo',
       timeOfDay: 'dia'
     }
@@ -125,7 +147,30 @@ export async function generateImage(prompt: string): Promise<string> {
     }
 
     const data = await response.json()
-    return data.candidates[0].content.parts[0].text
+    console.log('🖼️ Resposta Gemini Imagem:', JSON.stringify(data, null, 2))
+    
+    // Verificar se há candidatos na resposta
+    if (!data.candidates || data.candidates.length === 0) {
+      console.error('❌ Estrutura da resposta da imagem:', data)
+      throw new Error('Nenhum candidato encontrado na resposta da imagem do Gemini')
+    }
+    
+    // Verificar se há conteúdo na resposta
+    if (!data.candidates[0].content || !data.candidates[0].content.parts || data.candidates[0].content.parts.length === 0) {
+      console.error('❌ Estrutura do candidato da imagem:', data.candidates[0])
+      throw new Error('Estrutura de conteúdo inválida na resposta da imagem do Gemini')
+    }
+    
+    const imageUrl = data.candidates[0].content.parts[0].text
+    
+    // Verificar se a URL foi gerada
+    if (!imageUrl || imageUrl.trim() === '') {
+      console.error('❌ URL vazia na resposta da imagem:', data)
+      throw new Error('URL da imagem não foi gerada pelo Gemini')
+    }
+    
+    console.log('✅ Imagem gerada:', imageUrl)
+    return imageUrl
 
   } catch (error) {
     console.error('Erro ao gerar imagem:', error)

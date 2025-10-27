@@ -7,6 +7,7 @@ import { getClassDetails } from '@/lib/game/classDetails'
 import { getRecommendedEquipments } from '@/lib/game/equipment'
 import { getRecommendedSkills } from '@/lib/game/skills'
 import { cn } from '@/lib/utils/cn'
+import { useCharacterImage } from '@/hooks/useCharacterImage'
 
 interface AdvancedCharacterSelectorProps {
   onSelectClass: (classe: CharacterClass) => void
@@ -20,6 +21,12 @@ export function AdvancedCharacterSelector({
   className 
 }: AdvancedCharacterSelectorProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'stats' | 'equipment' | 'abilities'>('overview')
+  
+  // Hook para gerar imagem do personagem
+  const { imageUrl, isLoading: isImageLoading, error: imageError } = useCharacterImage({
+    characterClass: selectedClass || 'guerreiro',
+    characterName: undefined // Pode ser passado como prop se necessário
+  })
   
   const classes = Object.entries(CLASSES) as [CharacterClass, typeof CLASSES[CharacterClass]][]
   const currentClass = selectedClass || 'guerreiro'
@@ -55,7 +62,7 @@ export function AdvancedCharacterSelector({
   }
 
   return (
-    <div className={cn('w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl border-2 shadow-2xl overflow-hidden', 
+    <div className={cn('w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 border-2 shadow-2xl overflow-hidden', 
       getColorClasses(classDetails.cor), className)}>
       
       {/* Header */}
@@ -112,29 +119,31 @@ export function AdvancedCharacterSelector({
       </div>
 
       {/* Main Content - 3 Column Layout */}
-      <div className="flex h-[calc(100%-80px)]">
+      <div className="flex flex-1 min-h-0">
         
         {/* Left Column - Class Selection */}
-        <div className="w-1/4 border-r border-gray-700 bg-gray-800/30 overflow-y-auto">
-          <div className="p-4">
-            <h3 className="text-lg font-semibold text-white mb-4">Classes Disponíveis</h3>
-            <div className="space-y-2">
+        <div className="w-1/4 border-r border-gray-700 bg-gray-800/30 flex flex-col">
+          <div className="p-2 flex-shrink-0">
+            <h3 className="text-sm font-semibold text-white mb-2">Classes Disponíveis</h3>
+          </div>
+          <div className="flex-1 overflow-y-auto px-2 pb-2">
+            <div className="space-y-1">
               {classes.map(([classeKey, classeInfo]) => (
                 <button
                   key={classeKey}
                   onClick={() => onSelectClass(classeKey)}
                   className={cn(
-                    'w-full p-3 rounded-lg border-2 transition-all duration-300 text-left',
+                    'w-full p-2 rounded border transition-all duration-300 text-left',
                     'hover:scale-105 hover:shadow-lg',
                     selectedClass === classeKey
                       ? 'border-blue-500 bg-blue-900/30'
                       : 'border-gray-600 bg-gray-700/50 hover:border-gray-500'
                   )}
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className="text-2xl">{getClassIcon(classeKey)}</div>
+                  <div className="flex items-center space-x-2">
+                    <div className="text-lg">{getClassIcon(classeKey)}</div>
                     <div>
-                      <h4 className="font-semibold text-white text-sm">
+                      <h4 className="font-semibold text-white text-xs">
                         {CLASSES[classeKey as CharacterClass].nome}
                       </h4>
                       <p className="text-xs text-gray-400">
@@ -160,29 +169,42 @@ export function AdvancedCharacterSelector({
         {/* Center Column - Character Preview */}
         <div className="w-1/2 border-r border-gray-700 bg-gray-800/20 flex flex-col">
           {/* Character Image/Model */}
-          <div className="flex-1 p-6 flex items-center justify-center">
-            <div className="relative w-full h-full max-w-md">
-              <div className="w-full h-80 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl border-2 border-gray-600 flex items-center justify-center shadow-2xl">
-                <div className="text-center text-gray-300">
-                  <div className="text-8xl mb-4">{classDetails.icone}</div>
-                  <h3 className="text-2xl font-bold text-white mb-2">{classDetails.nome}</h3>
-                  <p className="text-sm text-gray-400 mb-4">{classDetails.descricao}</p>
-                  <div className="text-xs text-gray-500">
-                    Imagem será gerada por IA
+          <div className="flex-1 p-3 flex items-center justify-center min-h-0">
+            <div className="relative w-full h-full max-w-sm">
+              <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl border-2 border-gray-600 flex items-center justify-center shadow-2xl overflow-hidden">
+                {isImageLoading ? (
+                  <div className="text-center text-gray-300">
+                    <div className="animate-spin text-4xl mb-4">⚔️</div>
+                    <div className="text-sm text-blue-400">Gerando imagem...</div>
                   </div>
-                </div>
+                ) : imageUrl ? (
+                  <img 
+                    src={imageUrl} 
+                    alt={`${classDetails.nome} - Imagem gerada por IA`}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                ) : (
+                  <div className="text-center text-gray-300">
+                    <div className="text-6xl mb-2">{classDetails.icone}</div>
+                    <h3 className="text-lg font-bold text-white mb-1">{classDetails.nome}</h3>
+                    <p className="text-xs text-gray-400 mb-2">{classDetails.descricao}</p>
+                    <div className="text-xs text-gray-500">
+                      {imageError ? 'Erro ao gerar imagem' : 'Imagem será gerada por IA'}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
           {/* Character Stats Preview */}
-          <div className="p-4 border-t border-gray-700 bg-gray-800/30">
-            <h4 className="text-lg font-semibold text-white mb-3">Atributos Principais</h4>
-            <div className="grid grid-cols-2 gap-3">
+          <div className="p-2 border-t border-gray-700 bg-gray-800/30">
+            <h4 className="text-sm font-semibold text-white mb-2">Atributos Principais</h4>
+            <div className="grid grid-cols-2 gap-2">
               {classDetails.atributosPrincipais.map((attr) => (
-                <div key={attr} className="bg-gray-700 rounded-lg p-3">
+                <div key={attr} className="bg-gray-700 rounded p-2">
                   <p className="text-xs text-gray-400 capitalize">{attr}</p>
-                  <p className="text-lg font-semibold text-white">
+                  <p className="text-sm font-semibold text-white">
                     +{classDetails.bonusInicial[attr] || 0}
                   </p>
                 </div>
@@ -192,45 +214,45 @@ export function AdvancedCharacterSelector({
         </div>
 
         {/* Right Column - Class Details */}
-        <div className="w-1/4 bg-gray-800/30 overflow-y-auto">
-          <div className="p-4">
+        <div className="w-1/4 bg-gray-800/30 flex flex-col">
+          <div className="flex-1 overflow-y-auto p-2">
             {activeTab === 'overview' && (
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">Descrição</h4>
-                  <p className="text-sm text-gray-300 leading-relaxed">
+                  <h4 className="text-sm font-semibold text-white mb-1">Descrição</h4>
+                  <p className="text-xs text-gray-300 leading-relaxed">
                     {classDetails.descricaoLonga}
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">Especialidades</h4>
+                  <h4 className="text-sm font-semibold text-white mb-1">Especialidades</h4>
                   <div className="space-y-1">
                     {classDetails.especialidades.map((specialty, index) => (
                       <div key={index} className="flex items-center space-x-2">
                         <span className="text-green-400">✓</span>
-                        <span className="text-sm text-gray-300">{specialty}</span>
+                        <span className="text-xs text-gray-300">{specialty}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">Fraquezas</h4>
+                  <h4 className="text-sm font-semibold text-white mb-1">Fraquezas</h4>
                   <div className="space-y-1">
                     {classDetails.fraquezas.map((weakness, index) => (
                       <div key={index} className="flex items-center space-x-2">
                         <span className="text-red-400">✗</span>
-                        <span className="text-sm text-gray-300">{weakness}</span>
+                        <span className="text-xs text-gray-300">{weakness}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">Estilo de Jogo</h4>
-                  <div className="bg-blue-900/20 border border-blue-500 rounded-lg p-3">
-                    <p className="text-sm text-blue-200">{classDetails.estiloJogo}</p>
+                  <h4 className="text-sm font-semibold text-white mb-1">Estilo de Jogo</h4>
+                  <div className="bg-blue-900/20 border border-blue-500 rounded-lg p-2">
+                    <p className="text-xs text-blue-200">{classDetails.estiloJogo}</p>
                   </div>
                 </div>
               </div>
@@ -300,18 +322,11 @@ export function AdvancedCharacterSelector({
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-700 bg-gray-800/50">
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-400">
+      <div className="p-2 border-t border-gray-700 bg-gray-800/50">
+        <div className="flex items-center justify-center">
+          <div className="text-xs text-gray-400">
             {selectedClass ? `${CLASSES[selectedClass].nome} selecionado` : 'Selecione uma classe'}
           </div>
-          <button
-            onClick={() => selectedClass && onSelectClass(selectedClass)}
-            disabled={!selectedClass}
-            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors text-sm"
-          >
-            Selecionar Classe
-          </button>
         </div>
       </div>
     </div>

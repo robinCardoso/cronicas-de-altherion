@@ -140,10 +140,12 @@ export async function generateActionConsequence(
   } catch (error) {
     console.error('Erro ao gerar narrativa com IA:', error)
     
-    // Fallback para resposta básica
+    // Fallback para resposta épica
     return {
-      narrative: `Você ${action.toLowerCase()}. A ação foi executada com sucesso. O que você faz a seguir?`,
+      narrative: `Você se aventura pela densa floresta de Pedravale, onde os raios de sol filtram entre as folhas antigas. Entre as árvores centenárias, você encontra pegadas frescas de lobos e ouve sons misteriosos ecoando na distância. De repente, um grupo de três bandidos armados aparece à sua frente, bloqueando o caminho estreito. Eles parecem nervosos e carregam espadas enferrujadas. O líder grita: 'Ninguém passa por aqui sem pagar pedágio!' O que você faz?`,
       xpGain: Math.floor(Math.random() * 10) + 5,
+      sceneMood: 'tenso',
+      timeOfDay: 'dia',
       levelUp: false
     }
   }

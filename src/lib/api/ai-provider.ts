@@ -6,12 +6,13 @@ import { generateNarrative as geminiGenerateNarrative, generateImage as geminiGe
 
 // Detectar qual API está disponível
 export function getAvailableAIProvider(): 'openai' | 'gemini' | 'none' {
-  if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your_openai_api_key_here') {
-    return 'openai'
-  }
-  
+  // Priorizar Gemini (gratuito) sobre OpenAI (pago)
   if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here') {
     return 'gemini'
+  }
+  
+  if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your_openai_api_key_here') {
+    return 'openai'
   }
   
   return 'none'
@@ -23,24 +24,37 @@ export async function generateNarrative(
   playerAction: string,
   previousContext?: string
 ): Promise<NarrativeResponse> {
-  const provider = getAvailableAIProvider()
-  
-  switch (provider) {
-    case 'openai':
-      return openaiGenerateNarrative(character, playerAction, previousContext)
+  try {
+    // Usar API route para acessar variáveis de ambiente do servidor
+    const response = await fetch('/api/generate-narrative', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        character,
+        playerAction,
+        previousContext
+      })
+    })
     
-    case 'gemini':
-      return geminiGenerateNarrative(character, playerAction, previousContext)
+    if (!response.ok) {
+      throw new Error(`API route error: ${response.status}`)
+    }
     
-    case 'none':
-    default:
-      // Fallback para narrativa local
-      return {
-        narrative: `Você, ${character.nome}, ${playerAction.toLowerCase()}. O que você faz a seguir?`,
-        imageUrl: '/images/placeholder-scene.jpg',
-        sceneMood: 'tranquilo',
-        timeOfDay: 'dia'
-      }
+    return await response.json()
+    
+  } catch (error) {
+    console.error('❌ Erro ao chamar API route:', error)
+    
+    // Fallback para narrativa épica
+    return {
+      narrative: `Você se aventura pela densa floresta de Pedravale, onde os raios de sol filtram entre as folhas antigas. Entre as árvores centenárias, você encontra pegadas frescas de lobos e ouve sons misteriosos ecoando na distância. De repente, um grupo de três bandidos armados aparece à sua frente, bloqueando o caminho estreito. Eles parecem nervosos e carregam espadas enferrujadas. O líder grita: 'Ninguém passa por aqui sem pagar pedágio!' O que você faz?`,
+      imageUrl: '/images/placeholder-scene.jpg',
+      sceneMood: 'tenso',
+      timeOfDay: 'dia',
+      xp: Math.floor(Math.random() * 15) + 10
+    }
   }
 }
 

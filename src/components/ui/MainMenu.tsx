@@ -236,9 +236,9 @@ export function MainMenu({ onStartGame }: MainMenuProps) {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="w-full h-full flex flex-col space-y-6">
       {/* Título do Menu */}
-      <div className="text-center">
+      <div className="text-center flex-shrink-0">
         <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-2">
           🎮 Crônicas de Altherion
         </h1>
@@ -248,7 +248,7 @@ export function MainMenu({ onStartGame }: MainMenuProps) {
       </div>
 
       {/* Menu de Opções */}
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 flex-shrink-0">
         {menuOptions.map((option) => (
           <button
             key={option.id}
@@ -272,7 +272,7 @@ export function MainMenu({ onStartGame }: MainMenuProps) {
 
       {/* Conteúdo do Menu Ativo */}
       {activeMenu && (
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-600">
+        <div className="flex-1 bg-gray-800/50 rounded-xl p-6 border border-gray-600 min-h-0">
           {menuOptions.find(option => option.id === activeMenu)?.component}
         </div>
       )}
