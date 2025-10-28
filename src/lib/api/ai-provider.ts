@@ -3,10 +3,11 @@ import { Character, NarrativeResponse } from '@/types/game'
 // Importar ambos os provedores
 import { generateNarrative as openaiGenerateNarrative, generateSceneImage as openaiGenerateImage } from './openai'
 import { generateNarrative as geminiGenerateNarrative, generateImage as geminiGenerateImage } from './gemini'
+import { generateImageWithHuggingFace } from './huggingface'
 
-// Detectar qual API está disponível
+// Detectar qual API está disponível para NARRATIVA (priorizar Gemini)
 export function getAvailableAIProvider(): 'openai' | 'gemini' | 'none' {
-  // Priorizar Gemini (gratuito) sobre OpenAI (pago)
+  // Priorizar Gemini (gratuito) para narrativas
   if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here') {
     return 'gemini'
   }
@@ -15,6 +16,21 @@ export function getAvailableAIProvider(): 'openai' | 'gemini' | 'none' {
     return 'openai'
   }
   
+  return 'none'
+}
+
+// Detectar qual API está disponível para IMAGENS (priorizar Hugging Face gratuito)
+export function getAvailableImageProvider(): 'huggingface' | 'openai' | 'none' {
+  // Priorizar Hugging Face (gratuito)
+  if (process.env.HUGGINGFACE_API_TOKEN && process.env.HUGGINGFACE_API_TOKEN !== 'your_huggingface_api_token_here') {
+    return 'huggingface'
+  }
+
+  // Fallback para OpenAI DALL-E (pago)
+  if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your_openai_api_key_here') {
+    return 'openai'
+  }
+
   return 'none'
 }
 
@@ -58,22 +74,40 @@ export async function generateNarrative(
   }
 }
 
+// Função para gerar placeholder genérico (a IA deve gerar as imagens específicas)
+function getClassPlaceholder(characterClass?: string): string {
+  return '/images/placeholder-scene.svg'
+}
+
 // Função unificada para gerar imagem
-export async function generateImage(prompt: string): Promise<string> {
-  const provider = getAvailableAIProvider()
+export async function generateImage(prompt: string, sceneMood?: string, timeOfDay?: string, characterClass?: string): Promise<string> {
+  const imageProvider = getAvailableImageProvider()
   
-  switch (provider) {
-    case 'openai':
-      const openaiResult = await openaiGenerateImage(prompt, 'tranquilo', 'dia')
-      return openaiResult || '/images/placeholder-scene.jpg'
+  switch (imageProvider) {
+    case 'huggingface':
+      console.log('🎨 Usando Hugging Face para gerar imagem')
+      try {
+        const huggingfaceResult = await generateImageWithHuggingFace(prompt, characterClass)
+        return huggingfaceResult || getClassPlaceholder(characterClass)
+      } catch (error) {
+        console.log('🎨 Hugging Face falhou, usando placeholder')
+        return getClassPlaceholder(characterClass)
+      }
     
-    case 'gemini':
-      const geminiResult = await geminiGenerateImage(prompt)
-      return geminiResult || '/images/placeholder-scene.jpg'
+    case 'openai':
+      console.log('🎨 Usando OpenAI DALL-E para gerar imagem')
+      try {
+        const openaiResult = await openaiGenerateImage(prompt, sceneMood || 'tranquilo', timeOfDay || 'dia')
+        return openaiResult || getClassPlaceholder(characterClass)
+      } catch (error) {
+        console.log('🎨 OpenAI falhou (limite de cobrança?), usando placeholder')
+        return getClassPlaceholder(characterClass)
+      }
     
     case 'none':
     default:
-      return '/images/placeholder-scene.jpg'
+      console.log('🎨 Nenhuma API de imagem configurada, usando placeholder')
+      return getClassPlaceholder(characterClass)
   }
 }
 

@@ -34,7 +34,8 @@ export async function generateNarrative(
   character: Character,
   action: string,
   worldState?: any,
-  otherPlayersActions?: string[]
+  otherPlayersActions?: string[],
+  settings?: { maxTokens?: number; temperature?: number }
 ): Promise<NarrativeResponse> {
   try {
     // Monta o prompt contextual
@@ -53,8 +54,8 @@ export async function generateNarrative(
           content: prompt
         }
       ],
-      temperature: 0.8,
-      max_tokens: 500,
+      temperature: settings?.temperature || 0.8,
+      max_tokens: settings?.maxTokens || 500,
     })
 
     const narrative = completion.choices[0]?.message?.content || "Algo misterioso acontece..."

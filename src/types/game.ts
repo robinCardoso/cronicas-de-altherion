@@ -68,6 +68,7 @@ export interface NarrativeResponse {
   event?: 'ganho_de_experiencia' | 'combate' | 'exploracao' | 'social'
   xp?: number
   imageUrl?: string
+  suggestions?: string[]
 }
 
 // Tipos para o mundo

@@ -1,0 +1,27 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f2937;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#374151;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bg)"/>
+  
+  <!-- Border -->
+  <rect x="10" y="10" width="380" height="380" fill="none" stroke="#6b7280" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Icon -->
+  <circle cx="200" cy="150" r="40" fill="#4b5563"/>
+  <path d="M180 150 L200 130 L220 150 L200 170 Z" fill="#9ca3af"/>
+  
+  <!-- Text -->
+  <text x="200" y="220" text-anchor="middle" fill="#9ca3af" font-family="Arial, sans-serif" font-size="16" font-weight="bold">
+    Imagem será gerada por IA
+  </text>
+  
+  <text x="200" y="240" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="12">
+    Aguarde...
+  </text>
+</svg>

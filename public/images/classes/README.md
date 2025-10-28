@@ -1,23 +1,27 @@
 # Imagens das Classes
 
-Esta pasta contém as imagens dos personagens de cada classe.
+Esta pasta contém as imagens específicas para cada classe de personagem.
 
-## Estrutura esperada:
+## Arquivos necessários:
 
-- `guerreiro.jpg` - Imagem do guerreiro
-- `mago.jpg` - Imagem do mago  
-- `ladino.jpg` - Imagem do ladino
-- `arqueiro.jpg` - Imagem do arqueiro
-- `clerigo.jpg` - Imagem do clérigo
-- `paladino.jpg` - Imagem do paladino
-- `necromante.jpg` - Imagem do necromante
-- `barbaro.jpg` - Imagem do bárbaro
-- `druida.jpg` - Imagem do druida
-- `inventor.jpg` - Imagem do inventor
+- `warrior.jpg` - Imagem do Guerreiro
+- `wizard.jpg` - Imagem do Mago  
+- `rogue.jpg` - Imagem do Ladino
+- `archer.jpg` - Imagem do Arqueiro
+- `cleric.jpg` - Imagem do Clérigo
+- `paladin.jpg` - Imagem do Paladino
+- `necromancer.jpg` - Imagem do Necromante
+- `barbarian.jpg` - Imagem do Bárbaro
+- `druid.jpg` - Imagem do Druida
+- `inventor.jpg` - Imagem do Inventor
 
-## Futuras melhorias:
+## Como adicionar:
 
-- Imagens geradas por IA (DALL-E, Midjourney, etc.)
-- Imagens customizáveis por jogador
-- Sistema de avatares dinâmicos
-- Imagens baseadas na raça do personagem
+1. Baixe ou crie imagens para cada classe
+2. Salve com os nomes exatos listados acima
+3. Formato recomendado: JPG, 400x600px
+4. Estilo: Arte fantasia medieval
+
+## Fallback:
+
+Se uma imagem não existir, o sistema usará `/images/placeholder-scene.jpg`

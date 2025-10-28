@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { generateImage } from '@/lib/api/ai-provider'
 
 interface UseCharacterImageProps {
   characterClass: string
@@ -15,34 +14,92 @@ export function useCharacterImage({ characterClass, characterName }: UseCharacte
     if (!characterClass) return
 
     const generateCharacterImage = async () => {
+      console.log('🖼️ === INÍCIO GERAÇÃO IMAGEM PERSONAGEM ===')
+      console.log('🖼️ Classe:', characterClass)
+      console.log('🖼️ Nome:', characterName)
+      
       setIsLoading(true)
       setError(null)
 
       try {
-        // Criar prompt específico para a classe do personagem
-        const classPrompts: Record<string, string> = {
-          guerreiro: 'A powerful medieval warrior in heavy armor, holding a sword and shield, heroic pose, fantasy art style',
-          mago: 'A wise wizard with a long beard, wearing robes and holding a magical staff, mystical aura, fantasy art style',
-          ladino: 'A stealthy rogue in dark leather armor, holding daggers, shadowy appearance, fantasy art style',
-          arqueiro: 'A skilled archer with a bow and quiver, wearing green clothing, forest background, fantasy art style',
-          clerigo: 'A holy cleric in white robes with divine symbols, holding a holy symbol, radiant light, fantasy art style',
-          paladino: 'A noble paladin in shining armor, holding a sword and shield with holy symbols, heroic stance, fantasy art style',
-          necromante: 'A dark necromancer in black robes, surrounded by dark magic, skeletal elements, fantasy art style',
-          barbaro: 'A fierce barbarian warrior with tribal tattoos, wielding a massive axe, wild appearance, fantasy art style',
-          druida: 'A nature druid in green robes, surrounded by plants and animals, natural magic, fantasy art style',
-          inventor: 'A clever inventor with mechanical tools, wearing goggles, surrounded by gadgets, steampunk fantasy art style'
+        // Primeiro, tentar gerar imagem com IA
+        console.log(`🖼️ Tentando gerar imagem com IA para ${characterClass}`)
+        
+        const response = await fetch('/api/generate-image', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: `A fantasy ${characterClass} character, detailed, epic RPG art style`,
+            sceneMood: 'heroico',
+            timeOfDay: 'dia',
+            characterClass: characterClass
+          })
+        })
+
+        console.log('🖼️ Resposta da API generate-image:')
+        console.log('🖼️ - Status:', response.status)
+        console.log('🖼️ - OK:', response.ok)
+
+        if (response.ok) {
+          const data = await response.json()
+          console.log('🖼️ Dados recebidos:', data)
+          if (data.imageUrl) {
+            console.log(`🖼️ ✅ Imagem gerada com sucesso para ${characterClass}:`, data.imageUrl)
+            setImageUrl(data.imageUrl)
+            return
+          }
+        } else {
+          const errorText = await response.text()
+          console.log('🖼️ ❌ Erro na API:', errorText)
         }
 
-        const basePrompt = classPrompts[characterClass.toLowerCase()] || 'A fantasy character'
-        const fullPrompt = characterName 
-          ? `${basePrompt}, character named ${characterName}`
-          : basePrompt
+        // Fallback para imagens SVG se a IA falhar
+        console.log(`🎨 IA falhou, usando imagem SVG para ${characterClass}`)
+        
+        const classImages: Record<string, string> = {
+          'guerreiro': '/images/classes/warrior.svg',
+          'mago': '/images/classes/wizard.svg',
+          'ladino': '/images/classes/rogue.svg',
+          'arqueiro': '/images/classes/archer.svg',
+          'clerigo': '/images/classes/cleric.svg',
+          'paladino': '/images/classes/paladin.svg',
+          'necromante': '/images/classes/necromancer.svg',
+          'barbaro': '/images/classes/barbarian.svg',
+          'druida': '/images/classes/druid.svg',
+          'inventor': '/images/classes/inventor.svg'
+        }
 
-        const imageUrl = await generateImage(fullPrompt, 'heroico', 'dia')
-        setImageUrl(imageUrl)
+        const imagePath = classImages[characterClass.toLowerCase()]
+        
+        if (imagePath) {
+          console.log(`🎨 Usando imagem SVG para ${characterClass}: ${imagePath}`)
+          setImageUrl(imagePath)
+        } else {
+          console.log('🎨 Classe não encontrada, usando placeholder genérico')
+          setImageUrl('/images/placeholder-scene.svg')
+        }
       } catch (err) {
         console.error('Erro ao gerar imagem do personagem:', err)
         setError('Erro ao gerar imagem do personagem')
+        
+        // Fallback final para SVG
+        const classImages: Record<string, string> = {
+          'guerreiro': '/images/classes/warrior.svg',
+          'mago': '/images/classes/wizard.svg',
+          'ladino': '/images/classes/rogue.svg',
+          'arqueiro': '/images/classes/archer.svg',
+          'clerigo': '/images/classes/cleric.svg',
+          'paladino': '/images/classes/paladin.svg',
+          'necromante': '/images/classes/necromancer.svg',
+          'barbaro': '/images/classes/barbarian.svg',
+          'druida': '/images/classes/druid.svg',
+          'inventor': '/images/classes/inventor.svg'
+        }
+        
+        const fallbackImage = classImages[characterClass.toLowerCase()] || '/images/placeholder-scene.svg'
+        setImageUrl(fallbackImage)
       } finally {
         setIsLoading(false)
       }

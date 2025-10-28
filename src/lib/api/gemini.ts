@@ -14,8 +14,14 @@ REGRAS IMPORTANTES:
 4. Use linguagem épica e cinematográfica
 5. Inclua elementos de suspense, descoberta ou conflito
 6. Termine sempre com uma pergunta ou situação que convide à próxima ação
+7. IMPORTANTE: Seja conciso e direto - termine sua resposta de forma natural, sem cortes abruptos
+8. Adapte o tamanho da narrativa ao contexto - seja mais breve quando necessário
 
-EXEMPLO DE RESPOSTA BOA:
+EXEMPLO DE RESPOSTA BOA (CURTA):
+Jogador: "quero desbravar a floresta"
+Narrador: "Você se aventura pela densa floresta de Pedravale. Entre as árvores, encontra pegadas de lobos e ouve sons misteriosos. De repente, três bandidos armados aparecem bloqueando o caminho. O líder grita: 'Ninguém passa sem pagar pedágio!' O que você faz?"
+
+EXEMPLO DE RESPOSTA BOA (MÉDIA):
 Jogador: "quero desbravar a floresta"
 Narrador: "Você se aventura pela densa floresta de Pedravale, onde os raios de sol filtram entre as folhas antigas. Entre as árvores centenárias, você encontra pegadas frescas de lobos e ouve sons misteriosos ecoando na distância. De repente, um grupo de três bandidos armados aparece à sua frente, bloqueando o caminho estreito. Eles parecem nervosos e carregam espadas enferrujadas. O líder grita: 'Ninguém passa por aqui sem pagar pedágio!' O que você faz?"
 `
@@ -23,7 +29,8 @@ Narrador: "Você se aventura pela densa floresta de Pedravale, onde os raios de 
 export async function generateNarrative(
   character: Character,
   playerAction: string,
-  previousContext?: string
+  previousContext?: string,
+  settings?: { maxTokens?: number; temperature?: number }
 ): Promise<NarrativeResponse> {
   try {
     const prompt = `${WORLD_CONTEXT}
@@ -31,7 +38,13 @@ export async function generateNarrative(
 PERSONAGEM: ${character.nome} (${character.classe}, Nível ${character.level})
 AÇÃO DO JOGADOR: "${playerAction}"
 
-Crie uma narrativa épica e envolvente que desenvolva a história baseada na ação do jogador. Seja criativo, detalhado e cinematográfico!`
+INSTRUÇÕES ESPECÍFICAS:
+- Crie uma narrativa épica e envolvente que desenvolva a história baseada na ação do jogador
+- Seja criativo, detalhado e cinematográfico
+- Seja conciso e direto - termine naturalmente
+- Adapte o tamanho ao contexto da ação
+- NUNCA corte a narrativa no meio de uma frase
+- Termine sempre com uma pergunta ou situação que convide à próxima ação`
 
     const response = await fetch(`${GEMINI_API_URL}?key=${process.env.GEMINI_API_KEY}`, {
       method: 'POST',
@@ -44,12 +57,12 @@ Crie uma narrativa épica e envolvente que desenvolva a história baseada na aç
             text: prompt
           }]
         }],
-        generationConfig: {
-          temperature: 0.8,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 1000, // Aumentado para aproveitar o poder do Gemini 2.5 Flash
-        }
+            generationConfig: {
+              temperature: settings?.temperature || 0.8,
+              topK: 40,
+              topP: 0.95,
+              maxOutputTokens: settings?.maxTokens || 1000,
+            }
       })
     })
 
@@ -85,12 +98,20 @@ Crie uma narrativa épica e envolvente que desenvolva a história baseada na aç
       throw new Error('Estrutura de conteúdo inválida na resposta do Gemini')
     }
     
-    const narrative = data.candidates[0].content.parts[0].text
+    let narrative = data.candidates[0].content.parts[0].text
     
     // Verificar se o texto foi gerado
     if (!narrative || narrative.trim() === '') {
       console.error('❌ Texto vazio na resposta:', data)
       throw new Error('Texto não foi gerado pelo Gemini')
+    }
+    
+    // Corrigir problemas de encoding
+    try {
+      // Tentar decodificar se necessário
+      narrative = decodeURIComponent(escape(narrative))
+    } catch (e) {
+      console.log('⚠️ Tentativa de correção de encoding falhou, usando texto original')
     }
     
     console.log('✅ Narrativa gerada:', narrative.substring(0, 100) + '...')
@@ -110,12 +131,20 @@ Crie uma narrativa épica e envolvente que desenvolva a história baseada na aç
   } catch (error) {
     console.error('Erro ao gerar narrativa:', error)
     
-    // Fallback para narrativa local
+    // Fallback para narrativa local épica
+    const fallbackNarratives = [
+      `Você, ${character.nome}, decide ${playerAction.toLowerCase()}. A situação se desenvolve de forma interessante... Entre as árvores centenárias, você encontra pegadas frescas e ouve sons misteriosos ecoando na distância. De repente, um grupo de três bandidos armados aparece à sua frente, bloqueando o caminho estreito. Eles parecem nervosos e carregam espadas enferrujadas. O líder grita: 'Ninguém passa por aqui sem pagar pedágio!' O que você faz?`,
+      `Você, ${character.nome}, decide ${playerAction.toLowerCase()}. A floresta parece reagir à sua presença. O vento sussurra segredos antigos entre as folhas, e você sente que algo grande está prestes a acontecer. De repente, uma figura encapuzada emerge das sombras e sussurra: 'Aventureiro, você está sendo observado...' O que você faz?`,
+      `Você, ${character.nome}, decide ${playerAction.toLowerCase()}. O ambiente ao redor muda sutilmente. Você nota que as pegadas no chão são mais frescas do que esperava, e há um cheiro estranho no ar - como metal enferrujado e terra úmida. Algo não está certo aqui. O que você faz?`
+    ]
+    
+    const randomNarrative = fallbackNarratives[Math.floor(Math.random() * fallbackNarratives.length)]
+    
     return {
-      narrative: `Você, ${character.nome}, ${playerAction.toLowerCase()}. O que você faz a seguir?`,
+      narrative: randomNarrative,
       imageUrl: '/images/placeholder-scene.jpg',
-      xp: 10,
-      sceneMood: 'tranquilo',
+      xp: Math.floor(Math.random() * 15) + 10,
+      sceneMood: 'tenso',
       timeOfDay: 'dia'
     }
   }
@@ -123,54 +152,35 @@ Crie uma narrativa épica e envolvente que desenvolva a história baseada na aç
 
 export async function generateImage(prompt: string): Promise<string> {
   try {
-    // Gemini 2.0 Flash tem geração de imagens integrada
-    const response = await fetch(`${GEMINI_API_URL}?key=${process.env.GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `Generate an image: ${prompt}`
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 512,
-        }
-      })
-    })
-
-    if (!response.ok) {
-      throw new Error(`Gemini Image API error: ${response.status}`)
-    }
-
-    const data = await response.json()
-    console.log('🖼️ Resposta Gemini Imagem:', JSON.stringify(data, null, 2))
+    console.log('🎨 Gemini não suporta geração de imagens diretamente')
+    console.log('🎨 Prompt recebido:', prompt)
     
-    // Verificar se há candidatos na resposta
-    if (!data.candidates || data.candidates.length === 0) {
-      console.error('❌ Estrutura da resposta da imagem:', data)
-      throw new Error('Nenhum candidato encontrado na resposta da imagem do Gemini')
+    // Gemini 2.0 Flash é apenas texto, não gera imagens
+    // Vamos usar uma imagem placeholder específica baseada na classe
+    const classImages: Record<string, string> = {
+      'guerreiro': '/images/classes/warrior.jpg',
+      'mago': '/images/classes/wizard.jpg',
+      'ladino': '/images/classes/rogue.jpg',
+      'arqueiro': '/images/classes/archer.jpg',
+      'clerigo': '/images/classes/cleric.jpg',
+      'paladino': '/images/classes/paladin.jpg',
+      'necromante': '/images/classes/necromancer.jpg',
+      'barbaro': '/images/classes/barbarian.jpg',
+      'druida': '/images/classes/druid.jpg',
+      'inventor': '/images/classes/inventor.jpg'
     }
     
-    // Verificar se há conteúdo na resposta
-    if (!data.candidates[0].content || !data.candidates[0].content.parts || data.candidates[0].content.parts.length === 0) {
-      console.error('❌ Estrutura do candidato da imagem:', data.candidates[0])
-      throw new Error('Estrutura de conteúdo inválida na resposta da imagem do Gemini')
+    // Tentar extrair a classe do prompt
+    const lowerPrompt = prompt.toLowerCase()
+    for (const [classe, imagePath] of Object.entries(classImages)) {
+      if (lowerPrompt.includes(classe)) {
+        console.log(`🎨 Usando imagem específica para ${classe}: ${imagePath}`)
+        return imagePath
+      }
     }
     
-    const imageUrl = data.candidates[0].content.parts[0].text
-    
-    // Verificar se a URL foi gerada
-    if (!imageUrl || imageUrl.trim() === '') {
-      console.error('❌ URL vazia na resposta da imagem:', data)
-      throw new Error('URL da imagem não foi gerada pelo Gemini')
-    }
-    
-    console.log('✅ Imagem gerada:', imageUrl)
-    return imageUrl
+    console.log('🎨 Usando imagem placeholder genérica')
+    return '/images/placeholder-scene.jpg'
 
   } catch (error) {
     console.error('Erro ao gerar imagem:', error)
